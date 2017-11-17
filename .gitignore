@@ -1,3 +1,4 @@
 /node_modules
 pf.pem
 .vscode
+*.pyc
