@@ -18,6 +18,6 @@ io.on('connection', function (socket) {
 });
 
 // This server is listening on 3000 port
-http.listen(8000, function () {
+http.listen(3000, function () {
   console.log('listening on *.3000');
 });
