@@ -97,23 +97,16 @@ io.on('connection', function (socket) {
 
   // update the out status
   app.get('/update_out', function (req, res) {
-    const { user, players } = req.query;
+    const { user } = req.query;
     console.log('user', user);
-
-    if (players) {
-      // get the remain audience
-      const remainAudience = varAllContestants
-                              .filter(item => !players.includes(item.user))
-                              .filter(item => !item.out)
-                              .length;
-      io.emit('score', { user, remainAudience });
-    }
 
     varAllContestants = varAllContestants.map(item => (
       (String(item.user) === user) 
       ? Object.assign({}, item, { out: true })
       : item
     ));
+
+    io.emit('score', varAllContestants);
 
     console.log('update_out', varAllContestants);
 
