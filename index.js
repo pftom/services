@@ -17,6 +17,9 @@ var allContestants = [];
 // every contest update data
 var varAllContestants = [];
 
+// the same as redux-undo array
+var timeTravel = [];
+
 // when start node get the result from the Django
 var options = {
   hostname: 'powerformer.com',
@@ -28,14 +31,21 @@ var options = {
 
 var req = request.request(options, function (res) {
   res.setEncoding('utf8');
+  let rawData = '';
   res.on('data', function (chunk) {
-    allContestants = JSON.parse(chunk);
-    
-    varAllContestants = allContestants = allContestants.map(item => (
-      Object.assign({}, item, { out: false })
-    ));
-    console.log('allContestants', allContestants);
+    rawData += chunk;
   });
+  res.on('end', () => {
+    try {
+      allContestants = JSON.parse(rawData);
+      
+      varAllContestants = allContestants = allContestants.map(item => (
+        Object.assign({}, item, { out: false })
+      ));
+    } catch (e) {
+      console.log(e.message);
+    }
+  })
 });
 
 req.on('error', function (e) {
@@ -63,7 +73,7 @@ io.on('connection', function (socket) {
       multiplyOptionIndex++;
     }
     // response note
-    res.send('Successfully responded');
+    res.send(JSON.stringify('Successfully responded'));
     // print a user is connect
     console.log('a user connected');
     // listen on `push notification` event and notify client for response
@@ -72,12 +82,15 @@ io.on('connection', function (socket) {
 
   // update logged status
   app.get('/next_contest', function (req, res) {
+
+    timeTravel.push(varAllContestants);
     varAllContestants = allContestants;
-    res.send('Successfully responded');
+
     // print a user is connect
     console.log('a user connected');
     // listen on `push notification` event and notify client for response
     io.emit('next contest', 'start response for server');
+    res.send(JSON.stringify('Successfully responsed'));
   });
 
   app.get('/update_logged', function (req, res) {
@@ -89,26 +102,23 @@ io.on('connection', function (socket) {
       : item
     ));
 
-    console.log('update_logged', varAllContestants);
-
     io.emit('logged', { user });
     res.send(JSON.stringify('Successfully responsed'));
   });
 
   // update the out status
   app.get('/update_out', function (req, res) {
-    const { user } = req.query;
+    const { user, type, remainAudience, playersLength } = req.query;
     console.log('user', user);
+    console.log('score', (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength)));
 
     varAllContestants = varAllContestants.map(item => (
       (String(item.user) === user) 
-      ? Object.assign({}, item, { out: true })
+      ? Object.assign({}, item, { [type]: true, score: (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength))  })
       : item
     ));
 
     io.emit('score', varAllContestants);
-
-    console.log('update_out', varAllContestants);
 
     res.send(JSON.stringify('Successfully responsed'));
   });
@@ -116,7 +126,6 @@ io.on('connection', function (socket) {
 });
 
 app.get('/users/', function (req, res) {
-  console.log('users/', JSON.stringify(varAllContestants))
   res.send(JSON.stringify(varAllContestants));
 });
 
