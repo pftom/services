@@ -4,6 +4,9 @@ var io = require('socket.io')(http);
 var request = require('http');
 var cors = require('cors');
 
+// node process running port
+var port = 4000;
+
 var {
   singleOptions,
   multiplyOptions,
@@ -13,53 +16,41 @@ var singleOptionIndex = 0;
 var multiplyOptionIndex = 0;
 
 // original data
-var allContestants = [];
-// every contest update data
-var varAllContestants = [];
+var varAllContestants = [
+  {
+    id: 0,
+    username: '140150115',
+    name: '黄炜炜',
+    logged: false,
+    score: 0,
+  },
+  {
+    id: 1,
+    username: '140150116',
+    name: '张凡凡',
+    logged: false,
+    score: 0,
+  },
+  {
+    id: 2,
+    username: '140150117',
+    name: '啊哲哲',
+    logged: false,
+    score: 0,
+  },
+];
+
+var allContestants = varAllContestants;
 
 // the same as redux-undo array
 var timeTravel = [];
-
-// when start node get the result from the Django
-var options = {
-  hostname: 'powerformer.com',
-  port: 8000,
-  path: '/users/contestants/',
-  method: 'GET',
-};
-
-
-var req = request.request(options, function (res) {
-  res.setEncoding('utf8');
-  let rawData = '';
-  res.on('data', function (chunk) {
-    rawData += chunk;
-  });
-  res.on('end', () => {
-    try {
-      allContestants = JSON.parse(rawData);
-      
-      varAllContestants = allContestants = allContestants.map(item => (
-        Object.assign({}, item, { out: false })
-      ));
-    } catch (e) {
-      console.log(e.message);
-    }
-  })
-});
-
-req.on('error', function (e) {
-  console.log('problem with request:' + e.message);
-});
-
-req.end();
 
 app.use(cors());
 
 // notification api
 // When need to be updated to the next question, GET /push_notification
 // create connection
- // After frontend create socket.io instance, this can be bi-direction communication
+// After frontend create socket.io instance, this can be bi-direction communication
 io.on('connection', function (socket) {
   app.get('/push_notification', function (req, res) {
     const { option } = req.query;
@@ -95,9 +86,12 @@ io.on('connection', function (socket) {
 
   app.get('/update_logged', function (req, res) {
     const { user } = req.query;
+
+    // judge whether 
+
     // update the logged status
     varAllContestants = varAllContestants.map(item => (
-      (String(item.user) === user) 
+      (item.user === user) 
       ? Object.assign({}, item, { logged: true })
       : item
     ));
@@ -113,7 +107,7 @@ io.on('connection', function (socket) {
     console.log('score', (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength)));
 
     varAllContestants = varAllContestants.map(item => (
-      (String(item.user) === user) 
+      (item.user === user) 
       ? Object.assign({}, item, { [type]: true, score: (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength))  })
       : item
     ));
@@ -129,7 +123,7 @@ app.get('/users/', function (req, res) {
   res.send(JSON.stringify(varAllContestants));
 });
 
-// This server is listening on 3000 port
-http.listen(4000, function () {
-  console.log('listening on *.3000');
+// This server is listening on port
+http.listen(port, function () {
+  console.log(`listening on *.${4000}`);
 });
