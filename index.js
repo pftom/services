@@ -5,6 +5,11 @@ var request = require('http');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 
+const multipleQuestions = require('./multiple.json');
+const singleQuestions = require('./single.json');
+
+console.log('single', singleQuestions);
+
 // node process running port
 var port = 4000;
 
@@ -49,6 +54,9 @@ var varAllContestants = [
 ];
 
 var allContestants = varAllContestants;
+
+// get all the questions
+
 
 // the same as redux-undo array
 var timeTravel = [];
