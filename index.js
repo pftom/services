@@ -3,6 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('http');
 var cors = require('cors');
+const bodyParser = require('body-parser');
 
 // node process running port
 var port = 4000;
@@ -19,20 +20,27 @@ var multiplyOptionIndex = 0;
 var varAllContestants = [
   {
     id: 0,
+    username: 'dhucstmaster',
+    name: '主持人',
+    logged: false,
+    score: 0,
+  },
+  {
+    id: 1,
     username: '140150115',
     name: '黄炜炜',
     logged: false,
     score: 0,
   },
   {
-    id: 1,
+    id: 2,
     username: '140150116',
     name: '张凡凡',
     logged: false,
     score: 0,
   },
   {
-    id: 2,
+    id: 3,
     username: '140150117',
     name: '啊哲哲',
     logged: false,
@@ -84,20 +92,26 @@ io.on('connection', function (socket) {
     res.send(JSON.stringify('Successfully responsed'));
   });
 
-  app.get('/update_logged', function (req, res) {
-    const { user } = req.query;
+  app.get('/users/login', function (req, res) {
+    const { username } = req.query;
+    console.log('username', username);
 
-    // judge whether 
+    // judge whether user is valid
+    let isValidUser = false;
 
     // update the logged status
-    varAllContestants = varAllContestants.map(item => (
-      (item.user === user) 
-      ? Object.assign({}, item, { logged: true })
-      : item
-    ));
+    varAllContestants.map(item => {
+      if (item.username === username)  {
+        isValidUser = true;
+      }
+    });
 
-    io.emit('logged', { user });
-    res.send(JSON.stringify('Successfully responsed'));
+    if (isValidUser) {
+      io.emit('logged', { username });
+      res.json({ username });
+    } else {
+      res.status(404).send({ error: 'This login is not valid' })
+    }
   });
 
   // update the out status
