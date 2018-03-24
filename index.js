@@ -56,12 +56,61 @@ var varAllContestants = [
     score: 0,
     out: false,
   },
+  {
+    id: 4,
+    username: '140150118',
+    name: '黄炜炜1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
+  {
+    id: 5,
+    username: '140150119',
+    name: '张凡凡1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
+  {
+    id: 6,
+    username: '1401501110',
+    name: '啊哲哲1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
 ];
 
 var allContestants = varAllContestants;
 
 // maintain a players list for count numbers:
-let nowPlayers = [];
+let nowPlayers = [
+  {
+    id: 4,
+    username: '140150118',
+    name: '黄炜炜1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
+  {
+    id: 5,
+    username: '140150119',
+    name: '张凡凡1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
+  {
+    id: 6,
+    username: '1401501110',
+    name: '啊哲哲1',
+    logged: false,
+    score: 0,
+    out: false,
+  },
+];
 
 
 // get all the questions
@@ -133,36 +182,78 @@ io.on('connection', function (socket) {
 
   // update the out status
   app.get('/update_out', function (req, res) {
-    const { username } = req.query;
-    let nowUser = null;
+    try {
+      const { username } = req.query;
+      let nowUser = null;
+  
+      // collect player array
+      const playerUsernames = nowPlayers.map(item => item.username);
+  
+      // filter out player
+      const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
+  
+      // all remain out = false, score = remain.length - remainNotOut.length
+      const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
+  
+      // update all local varAllContestants
+      varAllContestants = varAllContestants.map(item => {
+        // update the user to out of this contest, 
+        needReturnItme = item;
+  
+        if (item.username === username) {
+          needReturnItme = Object.assign({}, item, { out: true, score: score });
+          nowUser = needReturnItme;
+        }
+  
+        return needReturnItme;
+      });
+  
+      // notify master side for update rank list
+      io.emit('score', nowUser);
 
-    // collect player array
-    const playerUsernames = nowPlayers.map(item => item.username);
+      // return response
+      res.send(JSON.stringify('Successfully responsed'));
+    } catch (e) {
+      res.status(500).send({ error: 'Sorry, meet some error'});
+    }
+  });
 
-    // filter out player
-    const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
+  // update the out status
+  app.get('/update_promote', function (req, res) {
+    try {
+      const { username } = req.query;
+      let nowUser = null;
+  
+      // collect player array
+      const playerUsernames = nowPlayers.map(item => item.username);
+  
+      // filter out player
+      const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
+  
+      // all remain out = false, score = remain.length - remainNotOut.length
+      const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
+  
+      // update all local varAllContestants
+      varAllContestants = varAllContestants.map(item => {
+        // update the user to out of this contest, 
+        needReturnItme = item;
+  
+        if (item.username === username) {
+          needReturnItme = Object.assign({}, item, { score: score });
+          nowUser = needReturnItme;
+        }
+  
+        return needReturnItme;
+      });
+  
+      // notify master side for update rank list
+      io.emit('score', nowUser);
 
-    // all remain out = false, score = remain.length - remainNotOut.length
-    const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
-
-    // update all local varAllContestants
-    varAllContestants = varAllContestants.map(item => {
-      // update the user to out of this contest, 
-      let needReturnItme = item;
-
-      if (item.username === username) {
-        needReturnItme = Object.assign({}, item, { out: true, score: score });
-        nowUser = needReturnItme;
-      }
-
-      return needReturnItme;
-    });
-
-    // notify master side for update rank list
-    io.emit('score', needReturnItme);
-
-    // return response
-    res.send(JSON.stringify('Successfully responsed'));
+      // return response
+      res.send(JSON.stringify('Successfully responsed'));
+    } catch (e) {
+      res.status(500).send({ error: 'Sorry, meet some error'});
+    }
   });
 
 });
