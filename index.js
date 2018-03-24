@@ -4,11 +4,15 @@ var io = require('socket.io')(http);
 var request = require('http');
 var cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
-const multipleQuestions = require('./multiple.json');
-const singleQuestions = require('./single.json');
+// const multipleQuestions = require('./multiple.json');
+// const singleQuestions = require('./single.json');
 
-console.log('single', singleQuestions);
+const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
+const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
+
+console.log(singleQuestions.length, multipleQuestions.length);
 
 // node process running port
 var port = 4000;
@@ -29,6 +33,7 @@ var varAllContestants = [
     name: '主持人',
     logged: false,
     score: 0,
+    out: false,
   },
   {
     id: 1,
@@ -36,6 +41,7 @@ var varAllContestants = [
     name: '黄炜炜',
     logged: false,
     score: 0,
+    out: false,
   },
   {
     id: 2,
@@ -43,6 +49,7 @@ var varAllContestants = [
     name: '张凡凡',
     logged: false,
     score: 0,
+    out: false,
   },
   {
     id: 3,
@@ -50,10 +57,14 @@ var varAllContestants = [
     name: '啊哲哲',
     logged: false,
     score: 0,
+    out: false,
   },
 ];
 
 var allContestants = varAllContestants;
+
+// maintain a players list for count numbers:
+
 
 // get all the questions
 
@@ -124,13 +135,14 @@ io.on('connection', function (socket) {
 
   // update the out status
   app.get('/update_out', function (req, res) {
-    const { user, type, remainAudience, playersLength } = req.query;
-    console.log('user', user);
-    console.log('score', (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength)));
+    const { username } = req.query;
+    console.log('user', username);
+
+    const score = varAllContestants
 
     varAllContestants = varAllContestants.map(item => (
-      (item.user === user) 
-      ? Object.assign({}, item, { [type]: true, score: (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength))  })
+      (item.username === username) 
+      ? Object.assign({}, item, { out: true, score: (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength))  })
       : item
     ));
 
@@ -143,6 +155,30 @@ io.on('connection', function (socket) {
 
 app.get('/users/', function (req, res) {
   res.send(JSON.stringify(varAllContestants));
+});
+
+app.get('/questions/single/:id/', function (req, res) {
+  const id = req.params.id;
+
+  if (Number(id) > singleQuestions.length) {
+    res.status(404).send({ error: 'This question is not exist.' });
+  } else {
+    const question = singleQuestions[id];
+    
+    res.json(question);
+  }
+});
+
+app.get('/questions/multiple/:id/', function (req, res) {
+  const id = req.params.id;
+
+  if (Number(id) > multipleQuestions.length) {
+    res.status(404).send({ error: 'This question is not exist.' });
+  } else {
+    const question = multipleQuestions[id];
+    
+    res.json(question);
+  }
 });
 
 // This server is listening on port

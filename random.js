@@ -1,4 +1,4 @@
-var singleTotalNumber = 90;
+var singleTotalNumber = 85;
 var multiplyTotalNumber = 45;
 
 function getRandom(totalNumber, arr) {
