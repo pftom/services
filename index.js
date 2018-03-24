@@ -6,9 +6,6 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
-// const multipleQuestions = require('./multiple.json');
-// const singleQuestions = require('./single.json');
-
 const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
 const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
 
@@ -64,6 +61,7 @@ var varAllContestants = [
 var allContestants = varAllContestants;
 
 // maintain a players list for count numbers:
+let nowPlayers = [];
 
 
 // get all the questions
@@ -136,18 +134,34 @@ io.on('connection', function (socket) {
   // update the out status
   app.get('/update_out', function (req, res) {
     const { username } = req.query;
-    console.log('user', username);
+    let nowUser = null;
 
-    const score = varAllContestants
+    // collect player array
+    const playerUsernames = nowPlayers.map(item => item.username);
 
-    varAllContestants = varAllContestants.map(item => (
-      (item.username === username) 
-      ? Object.assign({}, item, { out: true, score: (varAllContestants.length - parseInt(remainAudience) - parseInt(playersLength))  })
-      : item
-    ));
+    // filter out player
+    const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
 
-    io.emit('score', varAllContestants);
+    // all remain out = false, score = remain.length - remainNotOut.length
+    const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
 
+    // update all local varAllContestants
+    varAllContestants = varAllContestants.map(item => {
+      // update the user to out of this contest, 
+      let needReturnItme = item;
+
+      if (item.username === username) {
+        needReturnItme = Object.assign({}, item, { out: true, score: score });
+        nowUser = needReturnItme;
+      }
+
+      return needReturnItme;
+    });
+
+    // notify master side for update rank list
+    io.emit('score', needReturnItme);
+
+    // return response
     res.send(JSON.stringify('Successfully responsed'));
   });
 
@@ -167,6 +181,14 @@ app.get('/questions/single/:id/', function (req, res) {
     
     res.json(question);
   }
+});
+
+app.get('/addPlayers/', function (req, res) {
+  const { players } = req.query;
+
+  nowPlayers = players;
+
+  res.send(JSON.stringify('Successfully responsed'));
 });
 
 app.get('/questions/multiple/:id/', function (req, res) {
