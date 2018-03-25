@@ -112,6 +112,8 @@ let nowPlayers = [
   },
 ];
 
+let nowContestants = [];
+
 
 // get all the questions
 
@@ -147,9 +149,13 @@ io.on('connection', function (socket) {
 
   // update logged status
   app.get('/next_contest', function (req, res) {
+    varAllContestants = varAllContestants.map(user => ({
+      ...user,
+      out: false,
+    }));
 
-    timeTravel.push(varAllContestants);
-    varAllContestants = allContestants;
+    // initial nowContestants and start a new contest
+    nowContestants = [];
 
     // print a user is connect
     console.log('a user connected');
@@ -166,10 +172,13 @@ io.on('connection', function (socket) {
     let isValidUser = false;
 
     // update the logged status
-    varAllContestants.map(item => {
+    varAllContestants = varAllContestants.map(item => {
       if (item.username === username)  {
         isValidUser = true;
+        return { ...item, logged: true };
       }
+
+      return item;
     });
 
     if (isValidUser) {
@@ -185,15 +194,52 @@ io.on('connection', function (socket) {
     try {
       const { username } = req.query;
       let nowUser = null;
+
+      // ====================================================
+      // ====================================================
+      // ====================================================
+      //
+      // for better modify, and BUG!
+      //
   
-      // collect player array
-      const playerUsernames = nowPlayers.map(item => item.username);
-  
-      // filter out player
-      const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
+      if (nowContestants.length === 0) {
+        // collect player array
+        const playerUsernames = nowPlayers.map(item => item.username);
+
+        // get rid of master user
+        const takeOutMasterContestants = varAllContestants.slice(1);
+
+        // filter out player
+        nowContestants = takeOutMasterContestants.filter(item => !playerUsernames.includes(item.username));
+      }
+
+      // store a now contestant list for later update score
+      const nowContestsCopy = nowContestants;
+      nowContestants = nowContestants.filter(item => !item.out)
+
+      // log res
+      console.log('nowContestsCopy', nowContestsCopy);
+      console.log('nowContestants', nowContestants);
   
       // all remain out = false, score = remain.length - remainNotOut.length
-      const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
+      // calculate the user's score
+      const score = nowContestsCopy.length - nowContestants.length;
+
+      // ====================================================
+      // ====================================================
+      // ====================================================
+
+      // and then update nowContestants
+      nowContestants.map(item => {
+        // update the user to out of this contest, 
+        needReturnItme = item;
+        
+        if (item.username === username) {
+          needReturnItme = Object.assign({}, item, { out: true, score: item.score + score });
+        }
+  
+        return needReturnItme;
+      });
   
       // update all local varAllContestants
       varAllContestants = varAllContestants.map(item => {
@@ -201,7 +247,7 @@ io.on('connection', function (socket) {
         needReturnItme = item;
   
         if (item.username === username) {
-          needReturnItme = Object.assign({}, item, { out: true, score: score });
+          needReturnItme = Object.assign({}, item, { out: true, score: item.score + score });
           nowUser = needReturnItme;
         }
   
@@ -223,15 +269,39 @@ io.on('connection', function (socket) {
     try {
       const { username } = req.query;
       let nowUser = null;
+
+      // ====================================================
+      // ====================================================
+      // ====================================================
+      //
+      // for better modify, and BUG!
+      //
   
-      // collect player array
-      const playerUsernames = nowPlayers.map(item => item.username);
-  
-      // filter out player
-      const needCountContestants = varAllContestants.filter(item => !playerUsernames.includes(item.username));
+      if (nowContestants.length === 0) {
+        // collect player array
+        const playerUsernames = nowPlayers.map(item => item.username);
+
+        // get rid of master user
+        const takeOutMasterContestants = varAllContestants.slice(1);
+
+        // filter out player
+        nowContestants = takeOutMasterContestants.filter(item => !playerUsernames.includes(item.username));
+      }
+
+      // store a now contestant list for later update score
+      const nowContestsCopy = nowContestants;
+      nowContestants = nowContestants.filter(item => !item.out);
+
+      // log res
+      console.log('nowContestsCopy', nowContestsCopy);
+      console.log('nowContestants', nowContestants);
   
       // all remain out = false, score = remain.length - remainNotOut.length
-      const score = needCountContestants.length - needCountContestants.filter(item => !item.out).length;
+      const score = nowContestsCopy.length - nowContestants.length;
+
+      // ====================================================
+      // ====================================================
+      // ====================================================
   
       // update all local varAllContestants
       varAllContestants = varAllContestants.map(item => {
@@ -239,7 +309,7 @@ io.on('connection', function (socket) {
         needReturnItme = item;
   
         if (item.username === username) {
-          needReturnItme = Object.assign({}, item, { score: score });
+          needReturnItme = Object.assign({}, item, { score: item.score + score });
           nowUser = needReturnItme;
         }
   
@@ -278,6 +348,7 @@ app.get('/addPlayers/', function (req, res) {
   const { players } = req.query;
 
   nowPlayers = players;
+  console.log('nowPlayers', nowPlayers);
 
   res.send(JSON.stringify('Successfully responsed'));
 });
