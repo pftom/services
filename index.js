@@ -112,8 +112,6 @@ let nowPlayers = [
   },
 ];
 
-let nowContestants = [];
-
 
 // get all the questions
 
@@ -122,6 +120,8 @@ let nowContestants = [];
 var timeTravel = [];
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // notification api
 // When need to be updated to the next question, GET /push_notification
@@ -153,9 +153,6 @@ io.on('connection', function (socket) {
       ...user,
       out: false,
     }));
-
-    // initial nowContestants and start a new contest
-    nowContestants = [];
 
     // print a user is connect
     console.log('a user connected');
@@ -194,52 +191,28 @@ io.on('connection', function (socket) {
     try {
       const { username } = req.query;
       let nowUser = null;
+      let needReturnItme = null;
+      
+      const playerUsernames = nowPlayers.map(item => item.username);
 
-      // ====================================================
-      // ====================================================
-      // ====================================================
-      //
-      // for better modify, and BUG!
-      //
-  
-      if (nowContestants.length === 0) {
-        // collect player array
-        const playerUsernames = nowPlayers.map(item => item.username);
+      // valid user which is logged
+      const validUsers = varAllContestants.slice(1).filter(user => user.logged);
 
-        // get rid of master user
-        const takeOutMasterContestants = varAllContestants.slice(1);
+      // get rid of players
+      const validGetRidOfPlayersUser = validUsers.filter(
+        user => !playerUsernames.includes(user.username)
+      );
 
-        // filter out player
-        nowContestants = takeOutMasterContestants.filter(item => !playerUsernames.includes(item.username));
-      }
+      console.log('validGetRidOfPlayersUser', validGetRidOfPlayersUser);
+      console.log('playerUsernames', playerUsernames);
+      console.log('username', username);
 
-      // store a now contestant list for later update score
-      const nowContestsCopy = nowContestants;
-      nowContestants = nowContestants.filter(item => !item.out)
+      // calculate score
+      // or const score = validGetRidOfPlayersUser.filter(user => user.out).length;
+      const score = validGetRidOfPlayersUser.length - 
+        validGetRidOfPlayersUser.filter(user => !user.out).length;
 
-      // log res
-      console.log('nowContestsCopy', nowContestsCopy);
-      console.log('nowContestants', nowContestants);
-  
-      // all remain out = false, score = remain.length - remainNotOut.length
-      // calculate the user's score
-      const score = nowContestsCopy.length - nowContestants.length;
-
-      // ====================================================
-      // ====================================================
-      // ====================================================
-
-      // and then update nowContestants
-      nowContestants.map(item => {
-        // update the user to out of this contest, 
-        needReturnItme = item;
-        
-        if (item.username === username) {
-          needReturnItme = Object.assign({}, item, { out: true, score: item.score + score });
-        }
-  
-        return needReturnItme;
-      });
+      console.log('score', score);
   
       // update all local varAllContestants
       varAllContestants = varAllContestants.map(item => {
@@ -247,7 +220,11 @@ io.on('connection', function (socket) {
         needReturnItme = item;
   
         if (item.username === username) {
-          needReturnItme = Object.assign({}, item, { out: true, score: item.score + score });
+          if (playerUsernames.includes(username)) {
+            needReturnItme = Object.assign({}, needReturnItme, { out: true, score: item.score + score });
+          } else {
+            needReturnItme = Object.assign({}, needReturnItme, { out: true });
+          }
           nowUser = needReturnItme;
         }
   
@@ -264,68 +241,14 @@ io.on('connection', function (socket) {
     }
   });
 
-  // update the out status
-  app.get('/update_promote', function (req, res) {
-    try {
-      const { username } = req.query;
-      let nowUser = null;
 
-      // ====================================================
-      // ====================================================
-      // ====================================================
-      //
-      // for better modify, and BUG!
-      //
-  
-      if (nowContestants.length === 0) {
-        // collect player array
-        const playerUsernames = nowPlayers.map(item => item.username);
+  // judge endOfThisQuestion
+  app.get('/endOfThisQuestion', function (req, res) {
+    console.log('hhh');
+    io.emit('endOfThisQuestion');
 
-        // get rid of master user
-        const takeOutMasterContestants = varAllContestants.slice(1);
-
-        // filter out player
-        nowContestants = takeOutMasterContestants.filter(item => !playerUsernames.includes(item.username));
-      }
-
-      // store a now contestant list for later update score
-      const nowContestsCopy = nowContestants;
-      nowContestants = nowContestants.filter(item => !item.out);
-
-      // log res
-      console.log('nowContestsCopy', nowContestsCopy);
-      console.log('nowContestants', nowContestants);
-  
-      // all remain out = false, score = remain.length - remainNotOut.length
-      const score = nowContestsCopy.length - nowContestants.length;
-
-      // ====================================================
-      // ====================================================
-      // ====================================================
-  
-      // update all local varAllContestants
-      varAllContestants = varAllContestants.map(item => {
-        // update the user to out of this contest, 
-        needReturnItme = item;
-  
-        if (item.username === username) {
-          needReturnItme = Object.assign({}, item, { score: item.score + score });
-          nowUser = needReturnItme;
-        }
-  
-        return needReturnItme;
-      });
-  
-      // notify master side for update rank list
-      io.emit('score', nowUser);
-
-      // return response
-      res.send(JSON.stringify('Successfully responsed'));
-    } catch (e) {
-      res.status(500).send({ error: 'Sorry, meet some error'});
-    }
-  });
-
+    res.send(JSON.stringify('Successfully Respond'));
+  })
 });
 
 app.get('/users/', function (req, res) {
@@ -344,8 +267,8 @@ app.get('/questions/single/:id/', function (req, res) {
   }
 });
 
-app.get('/addPlayers/', function (req, res) {
-  const { players } = req.query;
+app.post('/addPlayers/', function (req, res) {
+  const { players } = req.body;
 
   nowPlayers = players;
   console.log('nowPlayers', nowPlayers);

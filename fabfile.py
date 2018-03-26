@@ -24,7 +24,7 @@ def pull_image_and_redeploy():
         run("docker rm -f %s" % container_name)
 
     # Run a container with the updated image and restart proxy
-    run("docker run -d -p 3000:3000 --name %s %s" % (container_name, image_repo))
+    run("docker run -d -p 3000:4000 --name %s %s" % (container_name, image_repo))
 
 
 @task
