@@ -9,8 +9,6 @@ const fs = require('fs');
 const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
 const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
 
-console.log(singleQuestions.length, multipleQuestions.length);
-
 // node process running port
 var port = 4000;
 
@@ -139,12 +137,11 @@ io.on('connection', function (socket) {
       id = multiplyOptions[multiplyOptionIndex];
       multiplyOptionIndex++;
     }
+    // listen on `push notification` event and notify client for response
+    io.emit('push notification', { option, id });
     // response note
     res.send(JSON.stringify('Successfully responded'));
     // print a user is connect
-    console.log('a user connected');
-    // listen on `push notification` event and notify client for response
-    io.emit('push notification', { option, id });
   });
 
   // update logged status
