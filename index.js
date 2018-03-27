@@ -78,9 +78,11 @@ var varAllContestants = [
     score: 0,
     out: false,
   },
+  
 ];
 
-var allContestants = varAllContestants;
+// store a copy for init this game;
+var allContestants = Object.assign({}, varAllContestants);
 
 // maintain a players list for count numbers:
 let nowPlayers = [
@@ -109,6 +111,9 @@ let nowPlayers = [
     out: false,
   },
 ];
+
+// store a copy for init this game;
+var allPlayers = Object.assign({}, nowPlayers);
 
 
 // get all the questions
@@ -243,6 +248,19 @@ io.on('connection', function (socket) {
   app.get('/endOfThisQuestion', function (req, res) {
     console.log('hhh');
     io.emit('endOfThisQuestion');
+
+    res.send(JSON.stringify('Successfully Respond'));
+  });
+
+  // init this game
+  app.get('/initGame', function (req, res) {
+    // use init copy to replace now data
+    nowPlayers = allPlayers;
+    varAllContestants = allContestants;
+    singleOptionIndex = 0;
+    multiplyOptionIndex = 0;
+
+    io.emit('initGame');
 
     res.send(JSON.stringify('Successfully Respond'));
   })
