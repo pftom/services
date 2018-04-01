@@ -1,116 +1,32 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var request = require('http');
-var cors = require('cors');
-const bodyParser = require('body-parser');
 const fs = require('fs');
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+
+// export io for other route usage
+// reference exist front and back
+exports.io = io;
+exports.singleOptionIndex = 0;
+exports.multiplyOptionIndex = 0;
+
+// import personal defined function
+const push_notification = require('./routes/push_notification');
+let varAllContestants = require('./utils/data');
 
 const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
 const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
 
 // node process running port
-var port = 4000;
-
-var {
-  singleOptions,
-  multiplyOptions,
-} = require('./random');
-
-var singleOptionIndex = 0;
-var multiplyOptionIndex = 0;
-
-// original data
-var varAllContestants = [
-  {
-    id: 0,
-    username: 'dhucstmaster',
-    name: '主持人',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 1,
-    username: '140150115',
-    name: '黄炜炜',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 2,
-    username: '140150116',
-    name: '张凡凡',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 3,
-    username: '140150117',
-    name: '啊哲哲',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 4,
-    username: '140150118',
-    name: '黄炜炜1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 5,
-    username: '140150119',
-    name: '张凡凡1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 6,
-    username: '1401501110',
-    name: '啊哲哲1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  
-];
+const port = 4000;
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
 
 // maintain a players list for count numbers:
-let nowPlayers = [
-  {
-    id: 4,
-    username: '140150118',
-    name: '黄炜炜1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 5,
-    username: '140150119',
-    name: '张凡凡1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-  {
-    id: 6,
-    username: '1401501110',
-    name: '啊哲哲1',
-    logged: false,
-    score: 0,
-    out: false,
-  },
-];
+let nowPlayers = [];
 
 // store a copy for init this game;
 var allPlayers = Object.assign([], nowPlayers);
@@ -125,29 +41,14 @@ var timeTravel = [];
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
 
 // notification api
 // When need to be updated to the next question, GET /push_notification
 // create connection
 // After frontend create socket.io instance, this can be bi-direction communication
 io.on('connection', function (socket) {
-  app.get('/push_notification', function (req, res) {
-    const { option } = req.query;
-    let id = 0;
-
-    if (option === 'single') {
-      id = singleOptions[singleOptionIndex];
-      singleOptionIndex++;
-    } else {
-      id = multiplyOptions[multiplyOptionIndex];
-      multiplyOptionIndex++;
-    }
-    // listen on `push notification` event and notify client for response
-    io.emit('push notification', { option, id });
-    // response note
-    res.send(JSON.stringify('Successfully responded'));
-    // print a user is connect
-  });
+  app.get('/push_notification', push_notification);
 
   // update logged status
   app.get('/next_contest', function (req, res) {
@@ -170,17 +71,29 @@ io.on('connection', function (socket) {
     // judge whether user is valid
     let isValidUser = false;
 
+    // is already logged
+    let isAlreadyLogged = false;
+
     // update the logged status
     varAllContestants = varAllContestants.map(item => {
+      // this user exist
       if (item.username === username)  {
-        isValidUser = true;
-        return { ...item, logged: true };
+        // but is already logged
+        if (item.logged) {
+          isAlreadyLogged = true;
+        } else {
+          isValidUser = true;
+          return { ...item, logged: true };
+        }
       }
 
       return item;
     });
 
-    if (isValidUser) {
+    // if this user is already logged in
+    if (isAlreadyLogged) {
+      res.status(403).send({ error: 'This user is already logged in' });
+    } else if (isValidUser) {
       io.emit('logged', { username });
       res.json({ username });
     } else {
@@ -246,7 +159,6 @@ io.on('connection', function (socket) {
 
   // judge endOfThisQuestion
   app.get('/endOfThisQuestion', function (req, res) {
-    console.log('hhh');
     io.emit('endOfThisQuestion');
 
     res.send(JSON.stringify('Successfully Respond'));
