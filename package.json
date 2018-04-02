@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha __tests__ --timeout 10000",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +13,15 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "chai": "^4.1.2",
+    "config": "^1.30.0",
     "cors": "^2.8.4",
     "express": "^4.15.2",
     "express-validator": "^2.20.8",
+    "morgan": "^1.9.0",
     "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "chai-http": "^4.0.0",
+    "mocha": "^5.0.5"
   }
 }

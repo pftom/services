@@ -5,6 +5,8 @@ const io = require('socket.io')(http);
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const config = require('config');
+const morgan = require('morgan');
 
 // reference exist front and back
 let singleOptionIndex = 0;
@@ -12,13 +14,13 @@ let multiplyOptionIndex = 0;
 let varAllContestants = require('./utils/data');
 
 // import personal defined function
-const pushNotification = require('./routes/pushNotification');
-const nextContest = require('./routes/nextContest');
-const login = require('./routes/login');
-const updateOut = require('./routes/updateOut');
-
-
-
+const {
+  pushNotification,
+  nextContest,
+  login,
+  updateOut,
+  question,
+} = require('./routes/');
 
 const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
 const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
@@ -42,9 +44,17 @@ var allPlayers = Object.assign([], nowPlayers);
 // the same as redux-undo array
 var timeTravel = [];
 
+// add express middlewares for better development experiences
+if (config.util.getEnv('NODE_ENV') !== 'test') {
+  // use morgan to log at command line
+  app.use(morgan('combined')); // 'combined' outputs the Apache style logs
+}
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: 'application/json' }));
 app.use(expressValidator());
 
 // notification api
@@ -52,41 +62,65 @@ app.use(expressValidator());
 // create connection
 // After frontend create socket.io instance, this can be bi-direction communication
 // use factory function for this api
+// only frontend create socket.io, in this function api can be valid
 io.on('connection', function (socket) {
-  // user send next question request
+  /*
+   *  jump ||| next question ||| api
+   *
+   *
+   */
   app.get('/push_notification', pushNotification(
     io,
     singleOptionIndex,
     multiplyOptionIndex,
   ));
 
-  // update logged status
+  /*
+   *  jump ||| next contest ||| api
+   *
+   *
+   */
   app.get('/next_contest', nextContest(
     io,
     varAllContestants,
   ));
 
-  // user login api
+  /*
+   *  user ||| login ||| api
+   *
+   *
+   */
   app.get('/users/login', login(
     io,
     varAllContestants,
   ));
 
-  // update the out status
+  /*
+   *  judge ||| out of contest ||| api
+   *
+   *
+   */
   app.get('/update_out', updateOut(
     io,
     nowPlayers,
     varAllContestants,
   ));
 
-
-  // judge endOfThisQuestion
+  /*
+   *   ||| endOfThisQuestion ||| api
+   *
+   *
+   */
   app.get('/endOfThisQuestion', function (req, res) {
     io.emit('endOfThisQuestion');
     res.send(JSON.stringify('Successfully Respond'));
   });
 
-  // init this game
+  /*
+   *   ||| initGame ||| api
+   *
+   *
+   */
   app.get('/initGame', function (req, res) {
     // use init copy to replace now data
 
@@ -103,22 +137,37 @@ io.on('connection', function (socket) {
   })
 });
 
+/*
+ *  get   ||| users |||   api
+ *
+ *
+ */
+
 app.get('/users/', function (req, res) {
   res.send(JSON.stringify(varAllContestants));
 });
 
-app.get('/questions/single/:id/', function (req, res) {
-  const id = req.params.id;
 
-  if (Number(id) > singleQuestions.length) {
-    res.status(404).send({ error: 'This question is not exist.' });
-  } else {
-    const question = singleQuestions[id];
-    
-    res.json(question);
-  }
-});
+/*
+ *  get ||| single question ||| api
+ *
+ *
+ */
+app.get('/questions/single/:id/', question(singleQuestions));
 
+/*
+ *  get ||| multiple question ||| api
+ *
+ *
+ */
+app.get('/questions/multiple/:id/', question(multipleQuestions));
+
+
+/*
+ *  add ||| players ||| 
+ *
+ *
+ */
 app.post('/addPlayers/', function (req, res) {
   const { players } = req.body;
 
@@ -128,19 +177,14 @@ app.post('/addPlayers/', function (req, res) {
   res.send(JSON.stringify('Successfully responsed'));
 });
 
-app.get('/questions/multiple/:id/', function (req, res) {
-  const id = req.params.id;
-
-  if (Number(id) > multipleQuestions.length) {
-    res.status(404).send({ error: 'This question is not exist.' });
-  } else {
-    const question = multipleQuestions[id];
-    
-    res.json(question);
-  }
-});
-
-// This server is listening on port
+/*
+ *  listen ||| on 4000 server ||| 
+ *
+ *
+ */
 http.listen(port, function () {
   console.log(`listening on *.${4000}`);
 });
+
+// export app for test usage
+module.exports = app;
