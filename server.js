@@ -12,21 +12,8 @@ const morgan = require('morgan');
 let singleOptionIndex = 0;
 let multiplyOptionIndex = 0;
 let varAllContestants = require('./utils/data');
-
-// import personal defined function
-const {
-  pushNotification,
-  nextContest,
-  login,
-  updateOut,
-  question,
-} = require('./routes/');
-
 const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
 const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
-
-// node process running port
-const port = 4000;
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
@@ -37,12 +24,21 @@ let nowPlayers = [];
 // store a copy for init this game;
 var allPlayers = Object.assign([], nowPlayers);
 
+// import personal defined function
+const {
+  pushNotification,
+  nextContest,
+  login,
+  updateOut,
+  question,
+} = require('./routes/');
 
-// get all the questions
+/*
+ *  connect ||| mongdb ||| server
+ *
+ *
+ */
 
-
-// the same as redux-undo array
-var timeTravel = [];
 
 // add express middlewares for better development experiences
 if (config.util.getEnv('NODE_ENV') !== 'test') {
@@ -80,31 +76,37 @@ io.on('connection', function (socket) {
    *
    *
    */
-  app.get('/next_contest', nextContest(
-    io,
-    varAllContestants,
-  ));
+  app.get('/next_contest', (req, res) => {
+    varAllContestants = nextContest(
+      io,
+      varAllContestants,
+    )(req, res);
+  });
 
   /*
    *  user ||| login ||| api
    *
    *
    */
-  app.get('/users/login', login(
-    io,
-    varAllContestants,
-  ));
+  app.get('/users/login', (req, res) => {
+    varAllContestants = login(
+      io,
+      varAllContestants,
+    )(req, res);
+  });
 
   /*
    *  judge ||| out of contest ||| api
    *
    *
    */
-  app.get('/update_out', updateOut(
-    io,
-    nowPlayers,
-    varAllContestants,
-  ));
+  app.get('/update_out', (req, res) => {
+    varAllContestants = updateOut(
+      io,
+      nowPlayers,
+      varAllContestants,
+    )(req, res);
+  });
 
   /*
    *   ||| endOfThisQuestion ||| api
@@ -124,8 +126,6 @@ io.on('connection', function (socket) {
   app.get('/initGame', function (req, res) {
     // use init copy to replace now data
 
-    console.log('allPlayers', allPlayers);
-    console.log('allContestants', allContestants);
     nowPlayers = allPlayers;
     varAllContestants = allContestants;
     singleOptionIndex = 0;
@@ -144,7 +144,7 @@ io.on('connection', function (socket) {
  */
 
 app.get('/users/', function (req, res) {
-  res.send(JSON.stringify(varAllContestants));
+  res.send(varAllContestants);
 });
 
 
@@ -182,7 +182,7 @@ app.post('/addPlayers/', function (req, res) {
  *
  *
  */
-http.listen(port, function () {
+http.listen(4000, function () {
   console.log(`listening on *.${4000}`);
 });
 

@@ -55,5 +55,7 @@ module.exports = function (
     } catch (e) {
       res.status(500).send({ error: 'Sorry, meet some error'});
     }
+
+    return varAllContestants;
   }
 }

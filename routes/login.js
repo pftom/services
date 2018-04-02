@@ -30,12 +30,14 @@ module.exports = function (
 
     // if this user is already logged in
     if (isAlreadyLogged) {
-      res.status(403).send({ error: 'This user is already logged in' });
+      res.status(403).send({ error: 'This user is already logged in', logged: true });
     } else if (isValidUser) {
       io.emit('logged', { username });
       res.json({ username });
     } else {
       res.status(404).send({ error: 'This login is not valid' })
     }
+
+    return varAllContestants;
   }
 }

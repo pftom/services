@@ -8,5 +8,7 @@ module.exports = function (io, varAllContestants) {
     // listen on `/next_contest` event and notify client for response
     io.emit('next contest', 'start response for server');
     res.send(JSON.stringify('Successfully responsed'));
+
+    return varAllContestants;
   }
 }
