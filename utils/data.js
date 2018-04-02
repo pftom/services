@@ -15,6 +15,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 4,
@@ -39,6 +42,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 5,
@@ -47,6 +51,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 6,
@@ -55,6 +60,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: true,
   },
   {
     id: 7,
@@ -63,6 +69,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 8,
@@ -71,6 +78,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 9,
@@ -79,6 +87,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 10,
@@ -87,6 +96,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 11,
@@ -95,6 +105,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 12,
@@ -103,6 +114,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 13,
@@ -111,6 +123,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 14,
@@ -119,6 +132,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 15,
@@ -127,6 +141,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 16,
@@ -135,6 +150,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
   {
     id: 17,
@@ -143,6 +159,7 @@ const varAllContestants = [
     logged: false,
     score: 0,
     out: false,
+    isPlayer: false,
   },
 ];
 
