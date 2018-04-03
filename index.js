@@ -200,6 +200,3 @@ app.post('/addPlayers/', function (req, res) {
 http.listen(4000, function () {
   console.log(`listening on *.${4000}`);
 });
-
-// export app for test usage
-module.exports = app;
