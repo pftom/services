@@ -10,52 +10,71 @@ module.exports = function (
       let needReturnItme = null;
       
       const playerUsernames = nowPlayers.map(item => item.username);
-
-      // valid user which is logged
-      const validUsers = varAllContestants.slice(1).filter(user => user.logged);
-
-      // get rid of players
-      const validGetRidOfPlayersUser = validUsers.filter(
-        user => !playerUsernames.includes(user.username)
-      );
-
-      console.log('validGetRidOfPlayersUser', validGetRidOfPlayersUser);
-      console.log('playerUsernames', playerUsernames);
       console.log('username', username);
 
-      // calculate score
-      // or const score = validGetRidOfPlayersUser.filter(user => user.out).length;
-      const score = validGetRidOfPlayersUser.length - 
-        validGetRidOfPlayersUser.filter(user => !user.out).length;
-
-      console.log('score', score);
-  
-      // update all local varAllContestants
-      varAllContestants = varAllContestants.map(item => {
-        // update the user to out of this contest, 
-        needReturnItme = item;
-  
-        if (item.username === username) {
-          if (playerUsernames.includes(username)) {
-            needReturnItme = Object.assign({}, needReturnItme, { out: true, score: item.score + score });
-          } else {
-            needReturnItme = Object.assign({}, needReturnItme, { out: true });
+      // if players, just update out status
+      if (playerUsernames.includes(username)) {
+        varAllContestants = varAllContestants.map(user => {
+          if (user.username === username) {
+            nowUser = { ...user, out: true };
+            return nowUser;
           }
-          nowUser = needReturnItme;
-        }
+
+          return user;
+        });
+
+        nowPlayers = nowPlayers.map(user => {
+          if (user.username === username) {
+            return { ...user, out: true };
+          }
+
+          return user;
+        });
+      } else {
+        // if audience, update not out players score
+        varAllContestants = varAllContestants.map(user => {
+          if (user.username === username) {
+            nowUser = { ...user, out: true };
+
+            varAllContestants = varAllContestants.map(user => {
+              if (playerUsernames.includes(user.username) && !user.out) {
+                return { ...user, score: user.score + 1 };
+              }
+    
+              return user;
+            });
+
+            nowPlayers = nowPlayers.map(user => {
+              if (playerUsernames.includes(user.username) && !user.out) {
+                return { ...user, score: user.score + 1 };
+              }
+    
+              return user;
+            });
+
+            return nowUser;
+          }
+
+          return user;
+        })
+      }
   
-        return needReturnItme;
-      });
-  
-      // notify master side for update rank list
+      // if players, just notify client to update out status
       io.emit('score', nowUser);
+
+      // if not players, update all players
+      if (!playerUsernames.includes(username)) {
+        io.emit('players', nowPlayers)
+      }
 
       // return response
       res.send(JSON.stringify('Successfully responsed'));
+      return {
+        newNowPlayers: nowPlayers,
+        newVarAllContestants: varAllContestants,
+      };
     } catch (e) {
       res.status(500).send({ error: 'Sorry, meet some error'});
     }
-
-    return varAllContestants;
   }
 }

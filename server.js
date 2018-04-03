@@ -30,6 +30,7 @@ const {
   nextContest,
   login,
   updateOut,
+  updatePromote,
   question,
 } = require('./routes/');
 
@@ -101,10 +102,24 @@ io.on('connection', function (socket) {
    *
    */
   app.get('/update_out', (req, res) => {
-    varAllContestants = updateOut(
+    const {
+      newNowPlayers,
+      newVarAllContestants,
+    } = updateOut(
       io,
       nowPlayers,
       varAllContestants,
+    )(req, res);
+
+    varAllContestants = newVarAllContestants;
+    nowPlayers = newNowPlayers;
+  });
+
+  app.get('/update_promote', (req, res) => {
+    varAllContestants = updatePromote(
+      io,
+      nowPlayers,
+      varAllContestants
     )(req, res);
   });
 
