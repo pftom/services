@@ -9,20 +9,15 @@ const config = require('config');
 const morgan = require('morgan');
 
 // reference exist front and back
-let singleOptionIndex = 0;
-let multiplyOptionIndex = 0;
 let varAllContestants = require('./utils/data');
-const singleQuestions = JSON.parse(fs.readFileSync('./single.json', 'utf-8'));
-const multipleQuestions = JSON.parse(fs.readFileSync('./multiple.json', 'utf-8'));
+const singleQuestions = JSON.parse(fs.readFileSync('./utils/single.json', 'utf-8'));
+const multipleQuestions = JSON.parse(fs.readFileSync('./utils/multiple.json', 'utf-8'));
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
 
 // maintain a players list for count numbers:
 let nowPlayers = [];
-
-// store a copy for init this game;
-var allPlayers = Object.assign([], nowPlayers);
 
 // import personal defined function
 const {
@@ -68,8 +63,6 @@ io.on('connection', function (socket) {
    */
   app.get('/push_notification', pushNotification(
     io,
-    singleOptionIndex,
-    multiplyOptionIndex,
   ));
 
   /*
@@ -141,10 +134,8 @@ io.on('connection', function (socket) {
   app.get('/initGame', function (req, res) {
     // use init copy to replace now data
 
-    nowPlayers = allPlayers;
+    nowPlayers = [];
     varAllContestants = allContestants;
-    singleOptionIndex = 0;
-    multiplyOptionIndex = 0;
 
     io.emit('initGame');
 
@@ -187,9 +178,8 @@ app.post('/addPlayers/', function (req, res) {
   const { players } = req.body;
 
   nowPlayers = players;
-  console.log('nowPlayers', nowPlayers);
 
-  res.send(JSON.stringify('Successfully responsed'));
+  res.send(nowPlayers);
 });
 
 /*
@@ -200,3 +190,5 @@ app.post('/addPlayers/', function (req, res) {
 http.listen(4000, function () {
   console.log(`listening on *.${4000}`);
 });
+
+module.exports = app;
