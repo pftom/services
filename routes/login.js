@@ -4,7 +4,9 @@ module.exports = function (
 ) {
   return function (req, res) {
     const { username } = req.query;
-    console.log('username', username);
+
+    // store a copy for test
+    const storedVarAllContestants = [ ...varAllContestants ];
 
     // judge whether user is valid
     let isValidUser = false;
@@ -33,7 +35,11 @@ module.exports = function (
       res.status(403).send({ error: 'This user is already logged in', logged: true });
     } else if (isValidUser) {
       io.emit('logged', { username });
-      res.json({ username });
+      res.json({ 
+        username,
+        storedVarAllContestants,
+        varAllContestants,
+      });
     } else {
       res.status(404).send({ error: 'This login is not valid' })
     }

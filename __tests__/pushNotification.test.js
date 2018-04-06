@@ -7,6 +7,7 @@ let chaiHttp = require('chai-http');
 let server = require('../index');
 let should = chai.should();
 const io = require('socket.io-client');
+const _ = require('underscore');
 
 // require GET /questions/single/:id/ API handler
 let singleQuestions = require('../utils/single.json');
@@ -75,39 +76,6 @@ describe('The api within Socket.io', () => {
               id.should.be.equal('0');
               done();
             });
-          });
-    });
-  });
-
-  /*
-   *  Test   ||| next_contest |||   api
-   *  // need database help
-   *
-   */
-  describe('GET /next_contest', () => {
-    it('it should return relative option and id', (done) => {
-      chai.request(server)
-          .get('/push_notification?option=single&id=0')
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('option');
-            res.body.should.have.property('id');
-            res.body.option.should.be.eql('single');
-            res.body.id.should.be.eql('0');
-            done();
-          });
-    });
-
-    it('it should get the emitted push notification event', (done) => {
-      chai.request(server)
-          .get('/push_notification?option=single&id=0')
-          .end((err, res) => {
-            socket.on('push notification', ({ option, id }) => {
-              option.should.be.equal('single');
-              id.should.be.equal('0');
-              done();
-            })
           });
     });
   });
