@@ -35,7 +35,7 @@ module.exports = function (
       res.status(403).send({ error: 'This user is already logged in', logged: true });
     } else if (isValidUser) {
       io.emit('logged', { username });
-      res.json({ 
+      res.send({ 
         username,
         storedVarAllContestants,
         varAllContestants,

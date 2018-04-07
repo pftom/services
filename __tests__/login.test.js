@@ -64,6 +64,7 @@ describe('The api within Socket.io', () => {
             const {
               storedVarAllContestants,
               varAllContestants,
+              username,
             } = res.body;
 
             // compare front and back variation
@@ -100,12 +101,38 @@ describe('The api within Socket.io', () => {
           });
     });
 
-    it('it should get the emitted push notification event', (done) => {
+    it('it should return 403 for already logged', (done) => {
       chai.request(server)
-          .get('/next_contest')
+          .get('/users/login?username=2171793')
           .end((err, res) => {
-            socket.on('next contest', (msg) => {
-              msg.should.be.equal('start response for server');
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.should.have.property('logged');
+            res.body.error.should.be.equal('This user is already logged in');
+            res.body.logged.should.be.equal(true);
+            done();
+          });
+    });
+
+    it('it should return 404 for user not found', (done) => {
+      chai.request(server)
+          .get('/users/login?username=2171794')
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.error.should.be.equal('This login is not valid');
+            done();
+          });
+    });
+
+    it('it should receive the emitted logged event', (done) => {
+      chai.request(server)
+          .get('/users/login?username=161310405')
+          .end((err, res) => {
+            socket.on('logged', ({ username }) => {
+              username.should.be.equal('161310405');
               done();
             })
           });

@@ -124,7 +124,7 @@ io.on('connection', function (socket) {
    */
   app.get('/endOfThisQuestion', function (req, res) {
     io.emit('endOfThisQuestion');
-    res.send(JSON.stringify('Successfully Respond'));
+    res.send({ success: true });
   });
 
   /*
@@ -140,7 +140,11 @@ io.on('connection', function (socket) {
 
     io.emit('initGame');
 
-    res.send(JSON.stringify('Successfully Respond'));
+    res.send({ 
+      varAllContestants,
+      allContestants,
+      nowPlayers,
+    });
   })
 });
 

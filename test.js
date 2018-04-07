@@ -1,4 +1,4 @@
-const _ = require('underscore');
+const _ = require('lodash');
 
 const arr1 = [
   {
@@ -7,7 +7,7 @@ const arr1 = [
   },
   {
     a: 2,
-    b: 3,
+    b: 4,
   },
 ];
 
@@ -22,5 +22,5 @@ const arr2 = [
   },
 ];
 
-const res = _.difference(arr1, arr2);
+const res = _.difference([], []);
 console.log(res);
