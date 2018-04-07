@@ -58,8 +58,11 @@ describe('The api within Socket.io', () => {
             res.body.should.be.a('object');
             res.body.should.have.property('storedVarAllContestants');
             res.body.should.have.property('varAllContestants');
+            res.body.should.have.property('nowOutContestantUsernames');
             res.body.storedVarAllContestants.should.be.a('array');
             res.body.varAllContestants.should.be.a('array');
+            res.body.nowOutContestantUsernames.should.be.a('array');
+            res.body.nowOutContestantUsernames.length.should.be.equal(0);
 
             const {
               storedVarAllContestants,

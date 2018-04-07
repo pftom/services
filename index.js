@@ -19,6 +19,9 @@ var allContestants = Object.assign([], varAllContestants);
 // maintain a players list for count numbers:
 let nowPlayers = [];
 
+// maintain a nowOutContestantUsernames for calculate player's score
+let nowOutContestantUsernames = [];
+
 // import personal defined function
 const {
   pushNotification,
@@ -72,10 +75,17 @@ io.on('connection', function (socket) {
    *
    */
   app.get('/next_contest', (req, res) => {
-    varAllContestants = nextContest(
+    const {
+      newNowOutContestantUsernames,
+      newVarAllContestants,
+    } = nextContest(
       io,
       varAllContestants,
+      nowOutContestantUsernames,
     )(req, res);
+
+    varAllContestants = newVarAllContestants;
+    nowOutContestantUsernames = newNowOutContestantUsernames;
   });
 
   /*
@@ -99,21 +109,25 @@ io.on('connection', function (socket) {
     const {
       newNowPlayers,
       newVarAllContestants,
+      newNowOutContestantUsernames,
     } = updateOut(
       io,
       nowPlayers,
       varAllContestants,
+      nowOutContestantUsernames,
     )(req, res);
 
     varAllContestants = newVarAllContestants;
     nowPlayers = newNowPlayers;
+    nowOutContestantUsernames = newNowOutContestantUsernames;
   });
 
   app.get('/update_promote', (req, res) => {
     varAllContestants = updatePromote(
       io,
       nowPlayers,
-      varAllContestants
+      varAllContestants,
+      nowOutContestantUsernames,
     )(req, res);
   });
 
@@ -136,11 +150,13 @@ io.on('connection', function (socket) {
     // use init copy to replace now data
 
     nowPlayers = [];
+    nowOutContestantUsernames = [];
     varAllContestants = allContestants;
 
     io.emit('initGame');
 
     res.send({ 
+      nowOutContestantUsernames,
       varAllContestants,
       allContestants,
       nowPlayers,

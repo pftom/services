@@ -1,4 +1,8 @@
-module.exports = function (io, varAllContestants) {
+module.exports = function (
+  io, 
+  varAllContestants,
+  nowOutContestantUsernames,
+) {
   return function (req, res) {
     // store a copy for test
     const storedVarAllContestants = [ ...varAllContestants ];
@@ -6,14 +10,19 @@ module.exports = function (io, varAllContestants) {
       ...user,
       out: false,
     }));
+    nowOutContestantUsernames = [];
 
     // listen on `/next_contest` event and notify client for response
     io.emit('next contest', 'start response for server');
     res.send({
       storedVarAllContestants,
       varAllContestants,
+      nowOutContestantUsernames,
     });
 
-    return varAllContestants;
+    return {
+      newNowOutContestantUsernames: varAllContestants,
+      newVarAllContestants: nowOutContestantUsernames,
+    };
   }
 }

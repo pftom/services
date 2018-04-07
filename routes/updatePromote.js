@@ -1,12 +1,28 @@
+function filterInElement(originalArr, filterCondition) {
+  return originalArr.filter(filterCondition);
+}
+
 module.exports = function (
   io,
   nowPlayers,
   varAllContestants,
+  nowOutContestantUsernames,
 ) {
   return function (req, res) {
     try {
+      // copy a nowPlayers, varAllContestants, nowOutContestantUsernames 
+      // for test usage
+      const copyNowPlayers = nowPlayers;
+      const copyVarAllContestants = varAllContestants;
+      const copyNowOutContestantUsernames = nowOutContestantUsernames;
+
       const { username } = req.query;
       let nowUser = null;
+
+      console.log('nowOutContestantUsernames', nowOutContestantUsernames);
+      console.log('username', username);
+      console.log('players', nowPlayers);
+
       // all players username array
       const playerUsernames = nowPlayers.map(user => user.username);
   
@@ -14,7 +30,40 @@ module.exports = function (
         // if judge error in frontend, give repair method
         varAllContestants = varAllContestants.map(user => {
           if (user.username === username) {
-            nowUser = { ...user, out: false };
+            // if player is promote,
+            // update it's now score use nowOutContestantUsernames
+
+            // calculate player's score
+            // first step: 
+            // filter unlogged audience, 
+            let filteredAllContestants = filterInElement(
+              copyVarAllContestants,
+              user => user.logged,
+            );
+            console.log('filteredAllContestants', filteredAllContestants);
+
+            // players (ensure calculate score robustness and stability)
+            filteredAllContestants = filterInElement(
+              filteredAllContestants,
+              user => !playerUsernames.includes(user.username),
+            );
+            console.log('filteredAllContestants', filteredAllContestants);
+
+            // filter fore contest outed audience
+            filteredAllContestants = filterInElement(
+              filteredAllContestants,
+              user => !nowOutContestantUsernames.includes(user.username),
+            );
+            console.log('filteredAllContestants', filteredAllContestants);
+
+            const calculateScore = filterInElement(
+              filteredAllContestants,
+              user => user.out,
+            );
+
+            console.log('calculateScore', calculateScore);
+
+            nowUser = { ...user, out: false, score: user.score + calculateScore.length };
             return nowUser;
           }
   
@@ -24,6 +73,7 @@ module.exports = function (
         varAllContestants = varAllContestants.map(user => {
           if (user.username === username) {
             nowUser = { ...user, out: false, score: user.score + 1 };
+            
             return nowUser;
           }
   
@@ -32,7 +82,15 @@ module.exports = function (
       }
 
       io.emit('score', nowUser);
-      res.send(JSON.stringify('Successfully responsed'));
+      res.send({
+        username,
+        copyNowPlayers,
+        copyVarAllContestants,
+        copyNowOutContestantUsernames,
+        nowPlayers,
+        varAllContestants,
+        nowOutContestantUsernames,
+      });
 
       return varAllContestants;
     } catch (e) {

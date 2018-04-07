@@ -59,10 +59,13 @@ describe('The api within Socket.io', () => {
             res.body.should.have.property('varAllContestants');
             res.body.should.have.property('allContestants');
             res.body.should.have.property('nowPlayers');
+            res.body.should.have.property('nowOutContestantUsernames');
             res.body.nowPlayers.should.be.a('array');
             res.body.varAllContestants.should.be.a('array');
             res.body.allContestants.should.be.a('array');
+            res.body.nowOutContestantUsernames.should.be.a('array');
             res.body.nowPlayers.length.should.be.equal(0);
+            res.body.nowOutContestantUsernames.length.should.be.equal(0);
 
             // varAllContestants should be equal to allContestants
             const {

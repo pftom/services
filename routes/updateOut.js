@@ -2,21 +2,30 @@ module.exports = function (
   io,
   nowPlayers,
   varAllContestants,
+  nowOutContestantUsernames,
 ) {
   return function (req, res) {
     try {
+      // copy a nowPlayers, varAllContestants, nowOutContestantUsernames 
+      // for test usage
+      const copyNowPlayers = nowPlayers;
+      const copyVarAllContestants = varAllContestants;
+      const copyNowOutContestantUsernames = nowOutContestantUsernames;
+
+
       const { username } = req.query;
       let nowUser = null;
       let needReturnItme = null;
       
+      // get all the player username array for later judge if player
       const playerUsernames = nowPlayers.map(item => item.username);
-      console.log('username', username);
 
       // if players, just update out status
       if (playerUsernames.includes(username)) {
         varAllContestants = varAllContestants.map(user => {
           if (user.username === username) {
             nowUser = { ...user, out: true };
+
             return nowUser;
           }
 
@@ -31,26 +40,15 @@ module.exports = function (
           return user;
         });
       } else {
-        // if audience, update not out players score
+        // if audience, update out status and add out audience to nowOutContestantUsernames
         varAllContestants = varAllContestants.map(user => {
           if (user.username === username) {
             nowUser = { ...user, out: true };
-
-            varAllContestants = varAllContestants.map(user => {
-              if (playerUsernames.includes(user.username) && !user.out) {
-                return { ...user, score: user.score + 1 };
-              }
-    
-              return user;
-            });
-
-            nowPlayers = nowPlayers.map(user => {
-              if (playerUsernames.includes(user.username) && !user.out) {
-                return { ...user, score: user.score + 1 };
-              }
-    
-              return user;
-            });
+            
+            // judge if the username is in nowOutContestantUsernames
+            if (nowOutContestantUsernames.indexOf(username) === -1) {
+              nowOutContestantUsernames.push(username);
+            }
 
             return nowUser;
           }
@@ -62,16 +60,16 @@ module.exports = function (
       // if players, just notify client to update out status
       io.emit('score', nowUser);
 
-      // if not players, update all players
-      if (!playerUsernames.includes(username)) {
-        io.emit('players', nowPlayers)
-      }
-
       // return response
-      res.send(JSON.stringify('Successfully responsed'));
+      res.send({
+        copyNowPlayers,
+        copyVarAllContestants,
+        copyNowOutContestantUsernames,
+      });
       return {
         newNowPlayers: nowPlayers,
         newVarAllContestants: varAllContestants,
+        newNowOutContestantUsernames: nowOutContestantUsernames,
       };
     } catch (e) {
       res.status(500).send({ error: 'Sorry, meet some error'});
