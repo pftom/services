@@ -1,3 +1,10 @@
+/*
+ *  TODO: Test new  this file
+ *
+ *
+ */
+
+
 function filterInElement(originalArr, filterCondition) {
   return originalArr.filter(filterCondition);
 }
@@ -33,37 +40,7 @@ module.exports = function (
             // if player is promote,
             // update it's now score use nowOutContestantUsernames
 
-            // calculate player's score
-            // first step: 
-            // filter unlogged audience, 
-            let filteredAllContestants = filterInElement(
-              copyVarAllContestants,
-              user => user.logged,
-            );
-            console.log('filteredAllContestants', filteredAllContestants);
-
-            // players (ensure calculate score robustness and stability)
-            filteredAllContestants = filterInElement(
-              filteredAllContestants,
-              user => !playerUsernames.includes(user.username),
-            );
-            console.log('filteredAllContestants', filteredAllContestants);
-
-            // filter fore contest outed audience
-            filteredAllContestants = filterInElement(
-              filteredAllContestants,
-              user => !nowOutContestantUsernames.includes(user.username),
-            );
-            console.log('filteredAllContestants', filteredAllContestants);
-
-            const calculateScore = filterInElement(
-              filteredAllContestants,
-              user => user.out,
-            );
-
-            console.log('calculateScore', calculateScore);
-
-            nowUser = { ...user, out: false, score: user.score + calculateScore.length };
+            nowUser = { ...user, out: false, score: user.score + nowOutContestantUsernames.length };
             return nowUser;
           }
   

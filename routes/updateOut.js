@@ -1,3 +1,11 @@
+/*
+ *  TODO: Test new  this file
+ *
+ *
+ */
+
+
+
 module.exports = function (
   io,
   nowPlayers,
@@ -16,6 +24,10 @@ module.exports = function (
       const { username } = req.query;
       let nowUser = null;
       let needReturnItme = null;
+
+      console.log('nowPlayers', nowPlayers);
+      console.log('username', username);
+      console.log('varAllContestants', varAllContestants);
       
       // get all the player username array for later judge if player
       const playerUsernames = nowPlayers.map(item => item.username);
@@ -43,19 +55,21 @@ module.exports = function (
         // if audience, update out status and add out audience to nowOutContestantUsernames
         varAllContestants = varAllContestants.map(user => {
           if (user.username === username) {
-            nowUser = { ...user, out: true };
-            
-            // judge if the username is in nowOutContestantUsernames
-            if (nowOutContestantUsernames.indexOf(username) === -1) {
-              nowOutContestantUsernames.push(username);
+            if (!user.out) {
+              // judge if the username is in nowOutContestantUsernames
+              if (nowOutContestantUsernames.indexOf(username) === -1) {
+                nowOutContestantUsernames.push(username);
+              }
             }
+            nowUser = { ...user, out: true };
 
             return nowUser;
           }
 
           return user;
-        })
+        });
       }
+      console.log('nowUser', nowUser);
   
       // if players, just notify client to update out status
       io.emit('score', nowUser);

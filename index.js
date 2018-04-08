@@ -22,6 +22,9 @@ let nowPlayers = [];
 // maintain a nowOutContestantUsernames for calculate player's score
 let nowOutContestantUsernames = [];
 
+// maintain a totalOutContestantUsernames for time travel
+// 先考虑让系统可运行，再变得更好
+
 // import personal defined function
 const {
   pushNotification,
@@ -180,14 +183,28 @@ app.get('/users/', function (req, res) {
  *
  *
  */
-app.get('/questions/single/:id/', question(singleQuestions));
+app.get('/questions/single/:id/', (req, res) => {
+  const { newNowOutContestantUsernames } = question(
+    singleQuestions,
+    nowOutContestantUsernames,
+  )(req, res);
+
+  nowOutContestantUsernames = newNowOutContestantUsernames
+});
 
 /*
  *  get ||| multiple question ||| api
  *
  *
  */
-app.get('/questions/multiple/:id/', question(multipleQuestions));
+app.get('/questions/multiple/:id/', (req, res) => {
+  const { newNowOutContestantUsernames } = question(
+    multipleQuestions,
+    nowOutContestantUsernames,
+  )(req, res);
+
+  nowOutContestantUsernames = newNowOutContestantUsernames
+});
 
 
 /*

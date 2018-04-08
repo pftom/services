@@ -21,8 +21,9 @@ module.exports = function (
     });
 
     return {
-      newNowOutContestantUsernames: varAllContestants,
-      newVarAllContestants: nowOutContestantUsernames,
+      
+      newNowOutContestantUsernames: nowOutContestantUsernames,
+      newVarAllContestants: varAllContestants,
     };
   }
 }

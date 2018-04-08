@@ -1,5 +1,22 @@
-module.exports = function (questions) {
+/*
+ *  TODO: Test new nowOutContestantUsernames variable
+ *
+ *
+ */
+
+
+module.exports = function (
+  questions,
+  nowOutContestantUsernames,
+) {
   return function (req, res) {
+    // store a copy of nowOutContestantUsernames for test usage
+    const copyNowOutContestantUsernames = nowOutContestantUsernames;
+
+    // a new question, empty nowOutContestantUsernames
+    nowOutContestantUsernames = [];
+
+
     const id = req.params.id;
     
     if (Number(id) > questions.length) {
@@ -9,5 +26,9 @@ module.exports = function (questions) {
       
       res.json(question);
     }
+
+    return {
+      newNowOutContestantUsernames: nowOutContestantUsernames,
+    };
   }
 }
