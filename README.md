@@ -11,3 +11,9 @@ cd services && npm install
 
 node index.js
 ```
+
+## 如何生成 JSON 格式的题库
+
+```
+$ ./scripts/generate_questions.py /path/to/questions.txt
+```
