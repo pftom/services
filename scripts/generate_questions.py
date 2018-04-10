@@ -36,6 +36,7 @@ def generate(filepath):
             continue
         else:
             question['question'] += line
+    output.append(questions)
 
     # Dump json to target position.
     with open(TARGET_OUTPUT, 'w') as fp:
