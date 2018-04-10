@@ -9,10 +9,6 @@ let should = chai.should();
 const io = require('socket.io-client');
 const _ = require('underscore');
 
-// require GET /questions/single/:id/ API handler
-let singleQuestions = require('../utils/single.json');
-let multipleQuestions = require('../utils/multiple.json');
-
 chai.use(chaiHttp);
 
 /*

@@ -17,7 +17,7 @@ let should = chai.should();
 const io = require('socket.io-client');
 
 // require GET /questions/API handler
-let tikuQuestions = require('../utils/tiku.json');
+let tikuQuestions = require('../utils/testTiku.json');
 
 chai.use(chaiHttp);
 
