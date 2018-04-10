@@ -8,9 +8,8 @@ let server = require('../index');
 let should = chai.should();
 const io = require('socket.io-client');
 
-// require GET /questions/single/:id/ API handler
-let singleQuestions = require('../utils/single.json');
-let multipleQuestions = require('../utils/multiple.json');
+// require GET /questions/API handler
+let tikuQuestions = require('../utils/tiku.json');
 
 chai.use(chaiHttp);
 
@@ -26,35 +25,35 @@ describe('GET /users/', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
-          res.body.length.should.be.eql(12);
+          res.body.length.should.be.eql(25);
           done();
         });
   });
 });
 
 /*
- *  Test   ||| get single question |||   api
+ *  Test   ||| get questions |||   api
  *
  *
  */
-describe('GET /questions/single/:id/', () => {
-  it('it should return relative id singleQuestions', (done) => {
+describe('GET /questions/', () => {
+  it('it should return relative term and id questions', (done) => {
     chai.request(server)
-        .get('/questions/single/6/')
+        .get('/questions/?term=2&id=4')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('question');
           res.body.should.have.property('answer');
-          res.body.question.should.be.eql(singleQuestions[6].question);
-          res.body.answer[0].should.be.eql(singleQuestions[6].answer[0]);
+          res.body.question.should.be.eql(tikuQuestions[2][4].question);
+          res.body.answer[0].should.be.eql(tikuQuestions[2][4].answer[0]);
           done();
         });
   });
 
-  it('it should return 404 Not Found Error', (done) => {
+  it('Term has go beyond the questions length', (done) => {
     chai.request(server)
-        .get('/questions/single/86/')
+        .get('/questions/?term=3&id=4')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');
@@ -62,31 +61,32 @@ describe('GET /questions/single/:id/', () => {
           done();
         });
   });
-});
 
-/*
- *  Test   ||| get multiple question |||   api
- *
- *
- */
-describe('GET /questions/multiple/:id/', () => {
-  it('it should return relative id multipleQuestions', (done) => {
+  it('Term should be integer.', (done) => {
     chai.request(server)
-        .get('/questions/multiple/6/')
+        .get('/questions/?term=undefined&id=8')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(404);
           res.body.should.be.a('object');
-          res.body.should.have.property('question');
-          res.body.should.have.property('answer');
-          res.body.question.should.be.eql(multipleQuestions[6].question);
-          res.body.answer.should.have.with.lengthOf(4);
+          res.body.should.have.property('error');
           done();
         });
   });
 
-  it('it should return 404 Not Found Error', (done) => {
+  it('id should be integer.', (done) => {
     chai.request(server)
-        .get('/questions/multiple/46/')
+        .get('/questions/?term=2&id=undefined')
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          done();
+        });
+  });
+
+  it('This question is not exist.', (done) => {
+    chai.request(server)
+        .get('/questions/?term=2&id=8')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');
