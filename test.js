@@ -1,3 +1,3 @@
-const singleQuestion = require('./utils/single.json');
+const tikuQuestions = require('./utils/tiku.json');
 
-console.log('singleQuestion', singleQuestion.slice(0, 7));
+console.log('singleQuestion', tikuQuestions[2][4]);

@@ -10,8 +10,7 @@ const morgan = require('morgan');
 
 // reference exist front and back
 let varAllContestants = require('./utils/data');
-const singleQuestions = JSON.parse(fs.readFileSync('./utils/single.json', 'utf-8'));
-const multipleQuestions = JSON.parse(fs.readFileSync('./utils/multiple.json', 'utf-8'));
+const tiQuestions = JSON.parse(fs.readFileSync('./utils/tiku.json', 'utf-8'));
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
@@ -183,9 +182,9 @@ app.get('/users/', function (req, res) {
  *
  *
  */
-app.get('/questions/single/:id/', (req, res) => {
+app.get('/questions/', (req, res) => {
   const { newNowOutContestantUsernames } = question(
-    singleQuestions,
+    tiQuestions,
     nowOutContestantUsernames,
   )(req, res);
 
@@ -197,14 +196,6 @@ app.get('/questions/single/:id/', (req, res) => {
  *
  *
  */
-app.get('/questions/multiple/:id/', (req, res) => {
-  const { newNowOutContestantUsernames } = question(
-    multipleQuestions,
-    nowOutContestantUsernames,
-  )(req, res);
-
-  nowOutContestantUsernames = newNowOutContestantUsernames
-});
 
 
 /*
