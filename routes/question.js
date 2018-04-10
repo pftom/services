@@ -17,7 +17,7 @@ module.exports = function (
     nowOutContestantUsernames = [];
 
 
-    const id = req.params.id;
+    const { term, id } = req.query;
     
     if (Number(id) > questions.length) {
       res.status(404).send({ error: 'This question is not exist.' });
