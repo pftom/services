@@ -55,25 +55,25 @@ describe('The api within Socket.io', () => {
   describe('GET /push_notification', () => {
     it('it should return relative option and id', (done) => {
       chai.request(server)
-          .get('/push_notification?option=single&id=0')
+          .get('/push_notification?term=2&id=3')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
-            res.body.should.have.property('option');
+            res.body.should.have.property('term');
             res.body.should.have.property('id');
-            res.body.option.should.be.eql('single');
-            res.body.id.should.be.eql('0');
+            res.body.term.should.be.eql('2');
+            res.body.id.should.be.eql('3');
             done();
           });
     });
 
     it('it should get the emitted push notification event', (done) => {
       chai.request(server)
-          .get('/push_notification?option=single&id=0')
+          .get('/push_notification?term=2&id=3')
           .end((err, res) => {
-            socket.on('push notification', ({ option, id }) => {
-              option.should.be.equal('single');
-              id.should.be.equal('0');
+            socket.on('push notification', ({ term, id }) => {
+              term.should.be.equal('2');
+              id.should.be.equal('3');
               done();
             });
           });

@@ -18,14 +18,16 @@ module.exports = function (
 
 
     let { term, id } = req.query;
-    console.log('term', term, id);
+    console.log('term', Number(term), id);
 
-    if (!Number(term) || !Number(id)) {
-      return res.status(404).send({ error: 'Term or id should be integer' });
+    if (isNaN(Number(term)) || isNaN(Number(id))) {
+      res.status(404).send({ error: 'Term or id should be integer' });
+      return;
     }
 
     if ((Number(term) >= questions.length) || (Number(id) >= questions[Number(term)].length)) {
-      return res.status(404).send({ error: 'Term or id is exceed limit' });
+      res.status(404).send({ error: 'Term or id is exceed limit' });
+      return;
     }
     
     term = Number(term);

@@ -1,3 +1,11 @@
+/*
+ *  TODO: Test questions limit num  this file
+ *
+ *
+ */
+
+
+
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
@@ -53,7 +61,7 @@ describe('GET /questions/', () => {
 
   it('Term has go beyond the questions length', (done) => {
     chai.request(server)
-        .get('/questions/?term=3&id=4')
+        .get('/questions/?term=4&id=4')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');
@@ -64,7 +72,7 @@ describe('GET /questions/', () => {
 
   it('Term should be integer.', (done) => {
     chai.request(server)
-        .get('/questions/?term=undefined&id=8')
+        .get('/questions/?term=undefined&id=6')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');

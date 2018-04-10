@@ -10,7 +10,7 @@ const morgan = require('morgan');
 
 // reference exist front and back
 let varAllContestants = require('./utils/data');
-const tiQuestions = JSON.parse(fs.readFileSync('./utils/tiku.json', 'utf-8'));
+const tiQuestions = require('./utils/tiku.json');
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
