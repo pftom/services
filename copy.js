@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 let varAllContestants = [
   { id: 0, name: '主持人', username: 'dhucstmaster', logged: false, score: 0, out: false, isPlayer: false },
   { id: 1, name: '刘欣怡', username: '2171800', logged: false, score: 0, out: false, isPlayer: false },
@@ -35,7 +37,7 @@ let varAllContestants = [
   { id: 33, name: '徐悦', username: '141340107', logged: false, score: 0, out: false, isPlayer: false },
   { id: 34, name: '朱宸', username: '141340224', logged: false, score: 0, out: false, isPlayer: false },
   { id: 35, name: '常皓钰', username: '141310209', logged: false, score: 0, out: false, isPlayer: false },
-  { id: 36, name: '王亦凡', username: '141340110', logged: false, score: 0, out: false, isPlayer: false },
+  { id: 36, name: '王亦凡', username: '14130110', logged: false, score: 0, out: false, isPlayer: false },
   { id: 37, name: '赵越', username: '141340111', logged: false, score: 0, out: false, isPlayer: false },
   { id: 38, name: '沈逸斐', username: '140750214', logged: false, score: 0, out: false, isPlayer: false },
   { id: 39, name: '刘浩', username: '141310211', logged: false, score: 0, out: false, isPlayer: false },
@@ -213,28 +215,5 @@ varAllContestants = varAllContestants.map(item => {
 
   return item;
 });
-
-let filteredPlayers = varAllContestants.filter(user => user.username === 'dhucstmaster');
-const filterPlayers = varAllContestants
-  .filter(user => user.username !== 'dhucstmaster')
-  .filter(user => {
-  if (playerArr.includes(user.name)) {
-    filteredPlayers.push(user);
-    return false;
-  }
-
-  return true;
-});
-
-varAllContestants = filteredPlayers.concat(filterPlayers);
-
-
-// add guest
-const contestantLen = varAllContestants.length;
-for (let i = contestantLen; i < contestantLen + 30; i++) {
-  varAllContestants.push({ 
-    id: i, name: `jb${i - contestantLen}`, username: `yzdd${i - contestantLen}`, logged: false, score: 0, out: false, isPlayer: false 
-  });
-}
 
 module.exports = varAllContestants;
