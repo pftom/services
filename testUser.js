@@ -1,5 +1,3 @@
-const tikuQuestions = require('./utils/tiku.json');
-
 let tiku = [
   {
       "id": 0,
@@ -135,7 +133,7 @@ let tiku = [
       "id": 1,
       "name": "刘欣怡",
       "username": "2171800",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -145,7 +143,7 @@ let tiku = [
       "id": 2,
       "name": "伍强生",
       "username": "151320108",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -155,7 +153,7 @@ let tiku = [
       "id": 3,
       "name": "杨博",
       "username": "151330122",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -235,7 +233,7 @@ let tiku = [
       "id": 11,
       "name": "曹茂鑫",
       "username": "151320222",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -269,7 +267,7 @@ let tiku = [
       "score": 0,
       "out": false,
       "isPlayer": false,
-      "isSigned": false
+      "isSigned": true
   },
   {
       "id": 16,
@@ -285,7 +283,7 @@ let tiku = [
       "id": 17,
       "name": "刘雨杉",
       "username": "161310102",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -525,7 +523,7 @@ let tiku = [
       "id": 44,
       "name": "胡双利",
       "username": "141330129",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -1975,7 +1973,7 @@ let tiku = [
       "id": 197,
       "name": "黄铭心",
       "username": "10105275",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -1983,4 +1981,14 @@ let tiku = [
   }
 ]
 
-module.exports = tiku;
+const errorArray = [
+  '',
+];
+
+tiku.map(user => {
+  if (user.isSigned && user.logged) {
+    errorArray.push(user);
+  }
+});
+
+console.log('errorArray', errorArray);

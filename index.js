@@ -10,22 +10,15 @@ const morgan = require('morgan');
 
 // reference exist front and back
 let varAllContestants = require('./utils/data');
-const tiQuestions = require('./utils/testTiku.json');
+const tiQuestions = require('./utils/tiku.json');
+
+
 
 // store a copy for init this game;
 var allContestants = Object.assign([], varAllContestants);
 
 // maintain a players list for count numbers:
 let nowPlayers = [];
-
-// maintain a nowOutContestantUsernames for calculate player's score
-let nowOutContestantUsernames = [];
-
-// store a signed array
-let isSignedAudience = [];
-
-// maintain a totalOutContestantUsernames for time travel
-// 先考虑让系统可运行，再变得更好
 
 // import personal defined function
 const {
@@ -81,16 +74,13 @@ io.on('connection', function (socket) {
    */
   app.get('/next_contest', (req, res) => {
     const {
-      newNowOutContestantUsernames,
       newVarAllContestants,
     } = nextContest(
       io,
       varAllContestants,
-      nowOutContestantUsernames,
     )(req, res);
 
     varAllContestants = newVarAllContestants;
-    nowOutContestantUsernames = newNowOutContestantUsernames;
   });
 
   /*
@@ -110,29 +100,26 @@ io.on('connection', function (socket) {
    *
    *
    */
+
+// TODO: 验证用户端加分逻辑是否正确，随机也好
   app.get('/update_out', (req, res) => {
     const {
       newNowPlayers,
       newVarAllContestants,
-      newNowOutContestantUsernames,
     } = updateOut(
       io,
       nowPlayers,
       varAllContestants,
-      nowOutContestantUsernames,
     )(req, res);
 
     varAllContestants = newVarAllContestants;
     nowPlayers = newNowPlayers;
-    nowOutContestantUsernames = newNowOutContestantUsernames;
   });
 
   app.get('/update_promote', (req, res) => {
     varAllContestants = updatePromote(
       io,
-      nowPlayers,
       varAllContestants,
-      nowOutContestantUsernames,
     )(req, res);
   });
 
@@ -155,23 +142,11 @@ io.on('connection', function (socket) {
     // use init copy to replace now data
 
     nowPlayers = [];
-    nowOutContestantUsernames = [];
-    varAllContestants = allContestants.map(user => {
-      if (isSignedAudience.includes(user.username)) {
-        return { ...user, isSigned: true };
-      }
-
-      return user;
-    });
+    varAllContestants = allContestants;
 
     io.emit('initGame');
 
-    res.send({ 
-      nowOutContestantUsernames,
-      varAllContestants,
-      allContestants,
-      nowPlayers,
-    });
+    res.send({ msg: 'successfully response' });
   })
 });
 
@@ -192,12 +167,9 @@ app.get('/users/', function (req, res) {
  *
  */
 app.get('/questions/', (req, res) => {
-  const { newNowOutContestantUsernames } = question(
+  question(
     tiQuestions,
-    nowOutContestantUsernames,
   )(req, res);
-
-  nowOutContestantUsernames = newNowOutContestantUsernames
 });
 
 /*
@@ -218,50 +190,6 @@ app.post('/addPlayers/', function (req, res) {
   nowPlayers = players;
 
   res.send(nowPlayers);
-});
-
-
-/*
- *  add ||| isSigned ||| 
- *
- *
- */
-app.get('/users/signUser/', function (req, res) {
-  const { username } = req.query;
-
-  console.log('name', username);
-
-  // isSignedSuccess
-  let isSignedSuccess = false;
-  let nowUser = null;
-
-  varAllContestants = varAllContestants.map(user => {
-    if (user.username === username) {
-      isSignedSuccess = true;
-      nowUser = user;
-
-      let isExist = false;
-      isSignedAudience.map(user => {
-        if (user.username === username) {
-          isExist = true;
-        }
-      })
-      
-      if (!isExist) {
-        isSignedAudience.push(user.username);
-      }
-
-      return { ...user, isSigned: true };
-    }
-
-    return user;
-  });
-
-  if (isSignedSuccess) {
-    return res.send({ username, msg: `${nowUser.name} 签到成功` });
-  } else {
-    return res.status(404).send({ error: '此用户不存在，签到失败' });
-  }
 });
 
 /*

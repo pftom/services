@@ -1,11 +1,9 @@
-const tikuQuestions = require('./utils/tiku.json');
-
-let tiku = [
+let signedUser = [
   {
       "id": 0,
       "name": "主持人",
       "username": "dhucstmaster",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
       "isPlayer": false,
@@ -16,7 +14,7 @@ let tiku = [
       "name": "樊静宜",
       "username": "161310405",
       "logged": false,
-      "score": 0,
+      "score": 10,
       "out": false,
       "isPlayer": true,
       "isSigned": true
@@ -26,8 +24,8 @@ let tiku = [
       "name": "张洛彬",
       "username": "151340224",
       "logged": false,
-      "score": 0,
-      "out": false,
+      "score": 10,
+      "out": true,
       "isPlayer": true,
       "isSigned": true
   },
@@ -37,7 +35,7 @@ let tiku = [
       "username": "141340110",
       "logged": false,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": true,
       "isSigned": true
   },
@@ -135,9 +133,9 @@ let tiku = [
       "id": 1,
       "name": "刘欣怡",
       "username": "2171800",
-      "logged": false,
+      "logged": true,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -145,8 +143,8 @@ let tiku = [
       "id": 2,
       "name": "伍强生",
       "username": "151320108",
-      "logged": false,
-      "score": 0,
+      "logged": true,
+      "score": 1,
       "out": false,
       "isPlayer": false,
       "isSigned": true
@@ -155,9 +153,9 @@ let tiku = [
       "id": 3,
       "name": "杨博",
       "username": "151330122",
-      "logged": false,
+      "logged": true,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -195,9 +193,9 @@ let tiku = [
       "id": 7,
       "name": "李曾贤",
       "username": "151330111",
-      "logged": false,
-      "score": 0,
-      "out": false,
+      "logged": true,
+      "score": 2,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -237,7 +235,7 @@ let tiku = [
       "username": "151320222",
       "logged": false,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -267,9 +265,9 @@ let tiku = [
       "username": "141310218",
       "logged": false,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": false,
-      "isSigned": false
+      "isSigned": true
   },
   {
       "id": 16,
@@ -287,7 +285,7 @@ let tiku = [
       "username": "161310102",
       "logged": false,
       "score": 0,
-      "out": false,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -315,9 +313,9 @@ let tiku = [
       "id": 21,
       "name": "何荆娆",
       "username": "151340202",
-      "logged": false,
-      "score": 0,
-      "out": false,
+      "logged": true,
+      "score": 3,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -325,9 +323,9 @@ let tiku = [
       "id": 22,
       "name": "王宇",
       "username": "141310117",
-      "logged": false,
-      "score": 0,
-      "out": false,
+      "logged": true,
+      "score": 2,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -355,8 +353,8 @@ let tiku = [
       "id": 25,
       "name": "李瞻文",
       "username": "141340120",
-      "logged": false,
-      "score": 0,
+      "logged": true,
+      "score": 1,
       "out": false,
       "isPlayer": false,
       "isSigned": true
@@ -525,9 +523,9 @@ let tiku = [
       "id": 44,
       "name": "胡双利",
       "username": "141330129",
-      "logged": false,
-      "score": 0,
-      "out": false,
+      "logged": true,
+      "score": 3,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   },
@@ -1975,12 +1973,20 @@ let tiku = [
       "id": 197,
       "name": "黄铭心",
       "username": "10105275",
-      "logged": false,
-      "score": 0,
-      "out": false,
+      "logged": true,
+      "score": 2,
+      "out": true,
       "isPlayer": false,
       "isSigned": true
   }
 ]
 
-module.exports = tiku;
+let isSigned = [];
+
+signedUser.map(user => {
+  if (user.isSigned && user.logged && !user.out) {
+    isSigned.push(user);
+  }
+});
+
+console.log(isSigned);

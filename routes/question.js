@@ -7,14 +7,8 @@
 
 module.exports = function (
   questions,
-  nowOutContestantUsernames,
 ) {
   return function (req, res) {
-    // store a copy of nowOutContestantUsernames for test usage
-    const copyNowOutContestantUsernames = nowOutContestantUsernames;
-
-    // a new question, empty nowOutContestantUsernames
-    nowOutContestantUsernames = [];
 
 
     let { term, id } = req.query;
@@ -35,9 +29,5 @@ module.exports = function (
     const question = questions[term][id];
     
     res.json(question);
-
-    return {
-      newNowOutContestantUsernames: nowOutContestantUsernames,
-    };
   }
 }

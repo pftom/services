@@ -66,7 +66,7 @@ describe('The api within Socket.io', () => {
 
     it('it should return signed error ', (done) => {
       chai.request(server)
-          .get('/users/signUser/?name=孟盈error')
+          .get('/users/signUser/?username=21717482')
           .end((err, res) => {
             res.should.have.status(404);
             res.body.should.be.a('object');

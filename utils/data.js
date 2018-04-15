@@ -14,7 +14,7 @@ let varAllContestants = [
   { id: 12, name: '樊静宜', username: '161310405', logged: false, score: 0, out: false, isPlayer: false },
   { id: 13, name: '杜优', username: '2171832', logged: false, score: 0, out: false, isPlayer: false },
   { id: 14, name: '文孔召', username: '151310109', logged: false, score: 0, out: false, isPlayer: false },
-  { id: 15, name: '姜威', username: '141310210', logged: false, score: 0, out: false, isPlayer: false },
+  { id: 15, name: '姜威', username: '141310218', logged: false, score: 0, out: false, isPlayer: false },
   { id: 16, name: '邓佳颖', username: '151310203', logged: false, score: 0, out: false, isPlayer: false },
   { id: 17, name: '刘雨杉', username: '161310102', logged: false, score: 0, out: false, isPlayer: false },
   { id: 18, name: '张洛彬', username: '151340224', logged: false, score: 0, out: false, isPlayer: false },
@@ -196,6 +196,7 @@ let varAllContestants = [
   { id: 194, name: '杨云', username: '2171761', logged: false, score: 0, out: false, isPlayer: false },
   { id: 195, name: '李宁', username: '2171740', logged: false, score: 0, out: false, isPlayer: false },
   { id: 196, name: '孟盈', username: '2171748', logged: false, score: 0, out: false, isPlayer: false },
+  { id: 197, name: '黄铭心', username: '10105275', logged: false, score: 0, out: false, isPlayer: false },
 ];
 
 
@@ -218,31 +219,14 @@ let filteredPlayers = varAllContestants.filter(user => user.username === 'dhucst
 const filterPlayers = varAllContestants
   .filter(user => user.username !== 'dhucstmaster')
   .filter(user => {
-  if (playerArr.includes(user.name)) {
-    filteredPlayers.push(user);
-    return false;
-  }
+    if (playerArr.includes(user.name)) {
+      filteredPlayers.push(user);
+      return false;
+    }
 
-  return true;
+    return true;
 });
 
 varAllContestants = filteredPlayers.concat(filterPlayers);
-
-// add isSigned word
-varAllContestants = varAllContestants.map(user => {
-  if (user.username === 'dhucstmaster') {
-    return { ...user, isSigned: true };
-  }
-
-  return { ...user, isSigned: false };
-});
-
-// // add guest
-// const contestantLen = varAllContestants.length;
-// for (let i = contestantLen; i < contestantLen + 30; i++) {
-//   varAllContestants.push({ 
-//     id: i, name: `jb${i - contestantLen}`, username: `yzdd${i - contestantLen}`, logged: false, score: 0, out: false, isPlayer: false 
-//   });
-// }
 
 module.exports = varAllContestants;
