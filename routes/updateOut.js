@@ -25,12 +25,34 @@ module.exports = function (
       let nowUser = null;
       let needReturnItme = null;
 
+      // player or isSigned and logged 
+
       console.log('nowPlayers', nowPlayers);
       console.log('username', username);
       console.log('varAllContestants', varAllContestants);
       
       // get all the player username array for later judge if player
       const playerUsernames = nowPlayers.map(item => item.username);
+
+      // isNowPlayer or isSigned and logged audience use this circumstance
+      let canGoOn = true;
+
+      varAllContestants.map(user => {
+        if (user.username === username) {
+          if (playerUsernames.includes(username)) {
+            return;
+          }
+
+          // if not player and not signed or not logged audience,
+          if (!user.logged || !user.isSigned) {
+            canGoOn = false;
+          }
+        }
+      });
+
+      if (!canGoOn) {
+        return res.send('silent failed');
+      }
 
       // if players, just update out status
       if (playerUsernames.includes(username)) {

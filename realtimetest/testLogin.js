@@ -1,15 +1,12 @@
-const tikuQuestions = require('./utils/tiku.json');
-
 let tiku = [
   {
       "id": 0,
       "name": "主持人",
       "username": "dhucstmaster",
-      "logged": false,
+      "logged": true,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 12,
@@ -18,8 +15,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 18,
@@ -28,8 +24,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 36,
@@ -38,8 +33,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 43,
@@ -48,8 +42,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 83,
@@ -58,8 +51,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 107,
@@ -68,8 +60,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 110,
@@ -78,8 +69,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 117,
@@ -88,8 +78,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 135,
@@ -98,8 +87,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 138,
@@ -108,8 +96,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 154,
@@ -118,8 +105,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
   },
   {
       "id": 161,
@@ -128,8 +114,16 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": true,
-      "isSigned": false
+      "isPlayer": true
+  },
+  {
+      "id": 0,
+      "name": "主持人",
+      "username": "dhucstmaster",
+      "logged": true,
+      "score": 0,
+      "out": false,
+      "isPlayer": false
   },
   {
       "id": 1,
@@ -138,8 +132,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 2,
@@ -148,8 +141,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 3,
@@ -158,8 +150,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 4,
@@ -168,8 +159,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 5,
@@ -178,8 +168,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 6,
@@ -188,8 +177,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 7,
@@ -198,8 +186,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 8,
@@ -208,8 +195,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 9,
@@ -218,8 +204,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 10,
@@ -228,8 +213,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 11,
@@ -238,8 +222,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 13,
@@ -248,8 +231,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 14,
@@ -258,8 +240,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 15,
@@ -268,8 +249,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 16,
@@ -278,8 +258,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 17,
@@ -288,8 +267,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 19,
@@ -298,8 +276,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 20,
@@ -308,8 +285,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 21,
@@ -318,8 +294,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 22,
@@ -328,8 +303,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 23,
@@ -338,8 +312,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 24,
@@ -348,8 +321,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 25,
@@ -358,8 +330,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 26,
@@ -368,8 +339,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 27,
@@ -378,8 +348,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 28,
@@ -388,8 +357,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 29,
@@ -398,8 +366,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 30,
@@ -408,8 +375,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 31,
@@ -418,8 +384,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 32,
@@ -428,8 +393,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 33,
@@ -438,8 +402,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 34,
@@ -448,8 +411,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 35,
@@ -458,8 +420,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 37,
@@ -468,8 +429,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 38,
@@ -478,8 +438,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 39,
@@ -488,8 +447,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 40,
@@ -498,8 +456,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 41,
@@ -508,8 +465,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 42,
@@ -518,8 +474,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 44,
@@ -528,8 +483,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 45,
@@ -538,8 +492,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 46,
@@ -548,8 +501,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 47,
@@ -558,8 +510,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 48,
@@ -568,8 +519,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 49,
@@ -578,8 +528,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 50,
@@ -588,8 +537,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 51,
@@ -598,8 +546,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 52,
@@ -608,8 +555,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 53,
@@ -618,8 +564,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 54,
@@ -628,8 +573,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 55,
@@ -638,8 +582,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 56,
@@ -648,8 +591,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 57,
@@ -658,8 +600,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 58,
@@ -668,8 +609,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 59,
@@ -678,8 +618,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 60,
@@ -688,8 +627,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 61,
@@ -698,8 +636,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 62,
@@ -708,8 +645,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 63,
@@ -718,8 +654,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 64,
@@ -728,8 +663,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 65,
@@ -738,8 +672,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 66,
@@ -748,8 +681,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 67,
@@ -758,8 +690,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 68,
@@ -768,8 +699,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 69,
@@ -778,8 +708,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 70,
@@ -788,8 +717,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 71,
@@ -798,8 +726,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 72,
@@ -808,8 +735,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 73,
@@ -818,8 +744,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 74,
@@ -828,8 +753,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 75,
@@ -838,8 +762,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 76,
@@ -848,8 +771,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 77,
@@ -858,8 +780,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 78,
@@ -868,8 +789,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 79,
@@ -878,8 +798,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 80,
@@ -888,8 +807,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 81,
@@ -898,8 +816,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 82,
@@ -908,8 +825,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 84,
@@ -918,8 +834,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 85,
@@ -928,8 +843,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 86,
@@ -938,8 +852,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 87,
@@ -948,8 +861,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 88,
@@ -958,8 +870,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 89,
@@ -968,8 +879,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 90,
@@ -978,8 +888,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 91,
@@ -988,8 +897,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 92,
@@ -998,8 +906,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 93,
@@ -1008,8 +915,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 94,
@@ -1018,8 +924,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 95,
@@ -1028,8 +933,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 96,
@@ -1038,8 +942,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 97,
@@ -1048,8 +951,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 98,
@@ -1058,8 +960,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 99,
@@ -1068,8 +969,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 100,
@@ -1078,8 +978,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 101,
@@ -1088,8 +987,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 102,
@@ -1098,8 +996,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 103,
@@ -1108,8 +1005,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 104,
@@ -1118,8 +1014,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 105,
@@ -1128,8 +1023,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 106,
@@ -1138,8 +1032,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 108,
@@ -1148,8 +1041,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 109,
@@ -1158,8 +1050,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 111,
@@ -1168,8 +1059,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 112,
@@ -1178,8 +1068,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 113,
@@ -1188,8 +1077,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 114,
@@ -1198,8 +1086,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 115,
@@ -1208,8 +1095,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 116,
@@ -1218,8 +1104,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 118,
@@ -1228,8 +1113,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 119,
@@ -1238,8 +1122,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 120,
@@ -1248,8 +1131,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 121,
@@ -1258,8 +1140,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 122,
@@ -1268,8 +1149,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 123,
@@ -1278,8 +1158,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 124,
@@ -1288,8 +1167,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 125,
@@ -1298,8 +1176,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 126,
@@ -1308,8 +1185,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 127,
@@ -1318,8 +1194,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 128,
@@ -1328,8 +1203,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 129,
@@ -1338,8 +1212,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 130,
@@ -1348,8 +1221,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 131,
@@ -1358,8 +1230,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 132,
@@ -1368,8 +1239,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 133,
@@ -1378,8 +1248,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 134,
@@ -1388,8 +1257,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 136,
@@ -1398,8 +1266,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 137,
@@ -1408,8 +1275,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 139,
@@ -1418,8 +1284,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 140,
@@ -1428,8 +1293,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 141,
@@ -1438,8 +1302,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 142,
@@ -1448,8 +1311,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 143,
@@ -1458,8 +1320,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 144,
@@ -1468,8 +1329,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 145,
@@ -1478,8 +1338,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 146,
@@ -1488,8 +1347,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 147,
@@ -1498,8 +1356,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 148,
@@ -1508,8 +1365,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 149,
@@ -1518,8 +1374,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 150,
@@ -1528,8 +1383,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 151,
@@ -1538,8 +1392,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 152,
@@ -1548,8 +1401,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 153,
@@ -1558,8 +1410,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 155,
@@ -1568,8 +1419,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 156,
@@ -1578,8 +1428,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 157,
@@ -1588,8 +1437,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 158,
@@ -1598,8 +1446,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 159,
@@ -1608,8 +1455,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 160,
@@ -1618,8 +1464,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 162,
@@ -1628,8 +1473,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 163,
@@ -1638,8 +1482,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 164,
@@ -1648,8 +1491,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 165,
@@ -1658,8 +1500,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 166,
@@ -1668,8 +1509,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 167,
@@ -1678,8 +1518,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 168,
@@ -1688,8 +1527,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 169,
@@ -1698,8 +1536,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 170,
@@ -1708,8 +1545,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 171,
@@ -1718,8 +1554,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 172,
@@ -1728,8 +1563,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 173,
@@ -1738,8 +1572,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 174,
@@ -1748,8 +1581,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 175,
@@ -1758,8 +1590,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 176,
@@ -1768,8 +1599,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 177,
@@ -1778,8 +1608,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 178,
@@ -1788,8 +1617,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 179,
@@ -1798,8 +1626,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 180,
@@ -1808,8 +1635,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 181,
@@ -1818,8 +1644,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 182,
@@ -1828,8 +1653,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 183,
@@ -1838,8 +1662,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 184,
@@ -1848,8 +1671,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 185,
@@ -1858,8 +1680,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 186,
@@ -1868,8 +1689,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 187,
@@ -1878,8 +1698,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 188,
@@ -1888,8 +1707,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 189,
@@ -1898,8 +1716,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 190,
@@ -1908,8 +1725,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 191,
@@ -1918,8 +1734,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 192,
@@ -1928,8 +1743,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 193,
@@ -1938,8 +1752,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 194,
@@ -1948,8 +1761,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 195,
@@ -1958,8 +1770,7 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   },
   {
       "id": 196,
@@ -1968,14 +1779,17 @@ let tiku = [
       "logged": false,
       "score": 0,
       "out": false,
-      "isPlayer": false,
-      "isSigned": false
+      "isPlayer": false
   }
 ];
 
-
-tiku.map(user => {
-  if (user.isSigned) {
-    console.log('true');
+// TODO: judge isSigned and not login user, and hint them.
+tiku = tiku.filter(user => {
+  if (user.isSigned && !user.logged) {
+    return true;
   }
-})
+
+  return false;
+});
+
+console.log(tiku);

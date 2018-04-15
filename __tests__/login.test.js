@@ -50,9 +50,65 @@ describe('The api within Socket.io', () => {
    *
    */
   describe('GET /users/login', () => {
+    it('it should return 403 for user not signed', (done) => {
+      chai.request(server)
+          .get('/users/login?username=2171748')
+          .end((err, res) => {
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.should.have.property('logged');
+            res.body.error.should.be.equal('Sorry, 你没有签到，不能参加比赛哦 ~');
+            res.body.logged.should.be.equal(true);
+            done();
+          });
+    });
+
+    it('it should return signed error ', (done) => {
+      chai.request(server)
+          .get('/users/signUser/?name=孟盈error')
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.error.should.be.equal('此用户不存在，签到失败');
+            done();
+          });
+    });
+
+    it('it should return signed success', (done) => {
+      chai.request(server)
+          .get('/users/signUser/?username=2171748')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('username');
+            res.body.should.have.property('msg');
+            res.body.username.should.be.equal('2171748');
+            res.body.msg.should.be.equal(`孟盈 签到成功`);
+            done();
+          });
+    });
+
+    
+
+    it('it should return 403 for player not allowed login', (done) => {
+      chai.request(server)
+          .get('/users/login?username=141340110')
+          .end((err, res) => {
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.should.have.property('logged');
+            res.body.error.should.be.equal('Player are not allowed login');
+            res.body.logged.should.be.equal(true);
+            done();
+          });
+    });
+
     it('it should return right storedVarAllContestants and varAllContestants', (done) => {
       chai.request(server)
-          .get('/users/login?username=171310525')
+          .get('/users/login?username=2171748')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -103,7 +159,7 @@ describe('The api within Socket.io', () => {
 
     it('it should return 403 for already logged', (done) => {
       chai.request(server)
-          .get('/users/login?username=171310525')
+          .get('/users/login?username=2171748')
           .end((err, res) => {
             res.should.have.status(403);
             res.body.should.be.a('object');
@@ -115,19 +171,6 @@ describe('The api within Socket.io', () => {
           });
     });
 
-    it('it should return 403 for player not allowed login', (done) => {
-      chai.request(server)
-          .get('/users/login?username=141340110')
-          .end((err, res) => {
-            res.should.have.status(403);
-            res.body.should.be.a('object');
-            res.body.should.have.property('error');
-            res.body.should.have.property('logged');
-            res.body.error.should.be.equal('Player are not allowed login');
-            res.body.logged.should.be.equal(true);
-            done();
-          });
-    });
 
     it('it should return 404 for user not found', (done) => {
       chai.request(server)
@@ -141,12 +184,26 @@ describe('The api within Socket.io', () => {
           });
     });
 
+    it('it should return signed success', (done) => {
+      chai.request(server)
+          .get('/users/signUser/?username=2171740')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('username');
+            res.body.should.have.property('msg');
+            res.body.username.should.be.equal('2171740');
+            res.body.msg.should.be.equal(`李宁 签到成功`);
+            done();
+          });
+    });
+
     it('it should receive the emitted logged event', (done) => {
       chai.request(server)
-          .get('/users/login?username=161310405')
+          .get('/users/login?username=2171740')
           .end((err, res) => {
             socket.on('logged', ({ username }) => {
-              username.should.be.equal('161310405');
+              username.should.be.equal('2171740');
               done();
             })
           });

@@ -211,6 +211,38 @@ app.post('/addPlayers/', function (req, res) {
   res.send(nowPlayers);
 });
 
+
+/*
+ *  add ||| isSigned ||| 
+ *
+ *
+ */
+app.get('/users/signUser/', function (req, res) {
+  const { username } = req.query;
+
+  console.log('name', username);
+
+  // isSignedSuccess
+  let isSignedSuccess = false;
+  let nowUser = null;
+
+  varAllContestants = varAllContestants.map(user => {
+    if (user.username === username) {
+      isSignedSuccess = true;
+      nowUser = user;
+      return { ...user, isSigned: true };
+    }
+
+    return user;
+  });
+
+  if (isSignedSuccess) {
+    return res.send({ username, msg: `${nowUser.name} 签到成功` });
+  } else {
+    return res.status(404).send({ error: '此用户不存在，签到失败' });
+  }
+});
+
 /*
  *  listen ||| on 4000 server ||| 
  *

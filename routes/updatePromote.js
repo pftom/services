@@ -32,6 +32,26 @@ module.exports = function (
 
       // all players username array
       const playerUsernames = nowPlayers.map(user => user.username);
+
+      // isNowPlayer or isSigned and logged audience use this circumstance
+      let canGoOn = true;
+      
+      varAllContestants.map(user => {
+        if (user.username === username) {
+          if (playerUsernames.includes(username)) {
+            return;
+          }
+
+          // if not player and not signed or not logged audience,
+          if (!user.logged || !user.isSigned) {
+            canGoOn = false;
+          }
+        }
+      });
+
+      if (!canGoOn) {
+        return res.send('silent failed');
+      }
   
       if (playerUsernames.includes(username)) {
         // if judge error in frontend, give repair method

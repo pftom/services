@@ -17,6 +17,9 @@ module.exports = function (
     // isPlayer
     let isPlayer = false;
 
+    // isn't sign
+    let isNotSigned = false;
+
     // update the logged status
     varAllContestants = varAllContestants.map(item => {
       // this user exist
@@ -26,6 +29,8 @@ module.exports = function (
           isAlreadyLogged = true;
         } else if (item.isPlayer) {
           isPlayer = true;
+        } else if (!item.isSigned) {
+          isNotSigned = true;
         } else {
           isValidUser = true;
           return { ...item, logged: true };
@@ -36,10 +41,12 @@ module.exports = function (
     });
 
     // if this user is already logged in
-    if (isAlreadyLogged) {
-      res.status(403).send({ error: 'This user is already logged in', logged: true });
-    } else if (isPlayer) {
+    if (isPlayer) {
       res.status(403).send({ error: 'Player are not allowed login', logged: true });
+    } else if (isNotSigned) {
+      res.status(403).send({ error: 'Sorry, 你没有签到，不能参加比赛哦 ~', logged: true });
+    } else if (isAlreadyLogged) {
+      res.status(403).send({ error: 'This user is already logged in', logged: true });
     } else if (isValidUser) {
       io.emit('logged', { username });
       res.send({ 

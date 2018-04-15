@@ -228,13 +228,15 @@ const filterPlayers = varAllContestants
 
 varAllContestants = filteredPlayers.concat(filterPlayers);
 
+// add isSigned word
+varAllContestants = varAllContestants.map(user => ({ ...user, isSigned: false }));
 
-// add guest
-const contestantLen = varAllContestants.length;
-for (let i = contestantLen; i < contestantLen + 30; i++) {
-  varAllContestants.push({ 
-    id: i, name: `jb${i - contestantLen}`, username: `yzdd${i - contestantLen}`, logged: false, score: 0, out: false, isPlayer: false 
-  });
-}
+// // add guest
+// const contestantLen = varAllContestants.length;
+// for (let i = contestantLen; i < contestantLen + 30; i++) {
+//   varAllContestants.push({ 
+//     id: i, name: `jb${i - contestantLen}`, username: `yzdd${i - contestantLen}`, logged: false, score: 0, out: false, isPlayer: false 
+//   });
+// }
 
 module.exports = varAllContestants;
