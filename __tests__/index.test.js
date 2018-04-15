@@ -19,6 +19,8 @@ const io = require('socket.io-client');
 // require GET /questions/API handler
 let tikuQuestions = require('../utils/testTiku.json');
 
+let varAllContestants = require('../utils/data');
+
 chai.use(chaiHttp);
 
 /*
@@ -33,7 +35,7 @@ describe('GET /users/', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
-          res.body.length.should.be.eql(25);
+          res.body.length.should.be.eql(varAllContestants.length);
           done();
         });
   });

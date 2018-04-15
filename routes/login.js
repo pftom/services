@@ -14,6 +14,9 @@ module.exports = function (
     // is already logged
     let isAlreadyLogged = false;
 
+    // isPlayer
+    let isPlayer = false;
+
     // update the logged status
     varAllContestants = varAllContestants.map(item => {
       // this user exist
@@ -21,6 +24,8 @@ module.exports = function (
         // but is already logged
         if (item.logged) {
           isAlreadyLogged = true;
+        } else if (item.isPlayer) {
+          isPlayer = true;
         } else {
           isValidUser = true;
           return { ...item, logged: true };
@@ -33,6 +38,8 @@ module.exports = function (
     // if this user is already logged in
     if (isAlreadyLogged) {
       res.status(403).send({ error: 'This user is already logged in', logged: true });
+    } else if (isPlayer) {
+      res.status(403).send({ error: 'Player are not allowed login', logged: true });
     } else if (isValidUser) {
       io.emit('logged', { username });
       res.send({ 

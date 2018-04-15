@@ -52,7 +52,7 @@ describe('The api within Socket.io', () => {
   describe('GET /users/login', () => {
     it('it should return right storedVarAllContestants and varAllContestants', (done) => {
       chai.request(server)
-          .get('/users/login?username=2171793')
+          .get('/users/login?username=171310525')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -103,13 +103,27 @@ describe('The api within Socket.io', () => {
 
     it('it should return 403 for already logged', (done) => {
       chai.request(server)
-          .get('/users/login?username=2171793')
+          .get('/users/login?username=171310525')
           .end((err, res) => {
             res.should.have.status(403);
             res.body.should.be.a('object');
             res.body.should.have.property('error');
             res.body.should.have.property('logged');
             res.body.error.should.be.equal('This user is already logged in');
+            res.body.logged.should.be.equal(true);
+            done();
+          });
+    });
+
+    it('it should return 403 for player not allowed login', (done) => {
+      chai.request(server)
+          .get('/users/login?username=141340110')
+          .end((err, res) => {
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.should.have.property('logged');
+            res.body.error.should.be.equal('Player are not allowed login');
             res.body.logged.should.be.equal(true);
             done();
           });
