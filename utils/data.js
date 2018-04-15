@@ -229,7 +229,13 @@ const filterPlayers = varAllContestants
 varAllContestants = filteredPlayers.concat(filterPlayers);
 
 // add isSigned word
-varAllContestants = varAllContestants.map(user => ({ ...user, isSigned: false }));
+varAllContestants = varAllContestants.map(user => {
+  if (user.username === 'dhucstmaster') {
+    return { ...user, isSigned: true };
+  }
+
+  return { ...user, isSigned: false };
+});
 
 // // add guest
 // const contestantLen = varAllContestants.length;

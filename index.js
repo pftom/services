@@ -21,6 +21,9 @@ let nowPlayers = [];
 // maintain a nowOutContestantUsernames for calculate player's score
 let nowOutContestantUsernames = [];
 
+// store a signed array
+let isSignedAudience = [];
+
 // maintain a totalOutContestantUsernames for time travel
 // 先考虑让系统可运行，再变得更好
 
@@ -153,7 +156,13 @@ io.on('connection', function (socket) {
 
     nowPlayers = [];
     nowOutContestantUsernames = [];
-    varAllContestants = allContestants;
+    varAllContestants = allContestants.map(user => {
+      if (isSignedAudience.includes(user.username)) {
+        return { ...user, isSigned: true };
+      }
+
+      return user;
+    });
 
     io.emit('initGame');
 
@@ -230,6 +239,18 @@ app.get('/users/signUser/', function (req, res) {
     if (user.username === username) {
       isSignedSuccess = true;
       nowUser = user;
+
+      let isExist = false;
+      isSignedAudience.map(user => {
+        if (user.username === username) {
+          isExist = true;
+        }
+      })
+      
+      if (!isExist) {
+        isSignedAudience.push(user.username);
+      }
+
       return { ...user, isSigned: true };
     }
 
