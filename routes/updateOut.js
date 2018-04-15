@@ -39,6 +39,11 @@ module.exports = function (
 
       varAllContestants.map(user => {
         if (user.username === username) {
+          if (user.out) {
+            canGoOn = false;
+            return;
+          }
+
           if (playerUsernames.includes(username)) {
             return;
           }
