@@ -227,6 +227,23 @@ const filterPlayers = varAllContestants
     return true;
 });
 
+// add guest 
+
+
 varAllContestants = filteredPlayers.concat(filterPlayers);
+
+// add guest
+const nowLen = varAllContestants.length;
+for (let i = 0; i < 20; i++) {
+  varAllContestants.push({ 
+    id: nowLen + i, 
+    name: `yzdd${i + 1}`, 
+    username: `yzdd${i + 1}`, 
+    logged: false, 
+    score: 0, 
+    out: false, 
+    isPlayer: false 
+  })
+}
 
 module.exports = varAllContestants;
